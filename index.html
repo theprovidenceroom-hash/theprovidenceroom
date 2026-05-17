@@ -278,6 +278,73 @@ textarea{resize:vertical;min-height:100px}
 .faq-item.open .faq-a{max-height:320px;padding:0 28px 22px}
 .faq-item.open .faq-arr{transform:rotate(45deg)}
 
+/* ── MIDNIGHT AUBERGINE THEME ── */
+:root{
+  --bg:#160f24;--bg2:#1d132d;--bg3:#27193b;
+  --surface:rgba(255,250,241,0.94);--card:rgba(255,250,241,0.93);--card2:rgba(248,239,226,0.9);
+  --border:rgba(212,168,67,0.22);--border2:rgba(212,168,67,0.42);
+  --gold:#d1a247;--gold2:#f0c766;--gold3:#f7ddb0;
+  --goldbg:rgba(209,162,71,0.12);--goldbg2:rgba(209,162,71,0.2);
+  --text:#f8efe2;--text2:#f3dfc2;--muted:#cab99d;--faint:#9f8c78;
+  --rose:#d89a96;--rosebg:rgba(216,154,150,0.12);
+  --sage:#9bbdad;--sagebg:rgba(155,189,173,0.14);
+  --shadow:0 2px 22px rgba(0,0,0,0.2);
+  --shadow2:0 12px 44px rgba(0,0,0,0.32);
+  --shadow3:0 24px 70px rgba(0,0,0,0.42);
+}
+body{background:
+  radial-gradient(circle at 50% 8%,rgba(209,162,71,0.16),transparent 34%),
+  radial-gradient(circle at 12% 28%,rgba(216,154,150,0.1),transparent 26%),
+  radial-gradient(circle at 88% 22%,rgba(155,189,173,0.08),transparent 28%),
+  linear-gradient(180deg,#120b1e 0%,#1a1029 46%,#241735 100%);
+}
+#geo{opacity:0.78;mix-blend-mode:screen}
+nav{background:rgba(18,11,30,0.82);border-bottom:1px solid rgba(240,199,102,0.2);box-shadow:0 12px 34px rgba(0,0,0,0.16)}
+nav.scrolled{box-shadow:0 14px 36px rgba(0,0,0,0.34)}
+.nav-logo,.nav-links a:hover{color:var(--gold2)}
+.nav-links a{color:rgba(248,239,226,0.72)}
+.mmenu{background:rgba(18,11,30,0.98)}
+.mmenu a{color:var(--text)}
+#services,#book,#about,#privacy,#disclaimer,#receive{background:linear-gradient(180deg,rgba(22,15,36,0.9),rgba(29,19,45,0.94))!important}
+#testimonials,#faq{background:linear-gradient(180deg,rgba(24,16,38,0.9),rgba(17,11,28,0.94))!important}
+#cards-help{background:linear-gradient(180deg,rgba(18,11,30,0.94),rgba(31,19,47,0.96))}
+.hero{background:radial-gradient(circle at 50% 30%,rgba(240,199,102,0.1),transparent 34%)}
+.moon-w svg{filter:drop-shadow(0 0 24px rgba(240,199,102,0.34))!important}
+.hero h1,.st{color:var(--text)}
+.hero p,.ss,.about-text p,.help-copy,.svc-desc,.pcard-desc,.faq-a,.disc-body{color:var(--muted)}
+.about-text p.lead,.help-lead,.t-text{color:var(--text2)}
+.priv-b{background:linear-gradient(135deg,rgba(155,189,173,0.14),rgba(209,162,71,0.12));border-color:rgba(240,199,102,0.18)}
+.svc-card,.tcard,.pcard,.help-item,.faq-item,.form-card,.cal-wrap,.pay-card,.disc-box{
+  background:linear-gradient(145deg,rgba(43,28,62,0.92),rgba(31,20,47,0.96));
+  border-color:rgba(240,199,102,0.2);
+  box-shadow:var(--shadow2);
+}
+.svc-card.feat,.svc-card.selected{
+  background:linear-gradient(145deg,rgba(64,42,82,0.96),rgba(38,25,58,0.98));
+  border-color:rgba(240,199,102,0.45);
+}
+.svc-card:hover,.tcard:hover,.pcard:hover{border-color:rgba(240,199,102,0.48);box-shadow:0 18px 50px rgba(0,0,0,0.4)}
+.svc-name,.pcard-title,.help-title,.faq-q,.pay-title,.cal-header h3,.rs-reading,.pay-sum-row.total .pay-sum-label{color:var(--text)}
+.step-tabs,.cal-header,.cal-nav{background:rgba(255,250,241,0.94)}
+.step-tab{color:#8e795c}
+.step-tab.done{background:rgba(209,162,71,0.14);color:#a77720}
+.form-card,.cal-wrap,.pay-card{
+  background:linear-gradient(145deg,rgba(255,250,241,0.96),rgba(244,232,211,0.94));
+  color:#1d132d;
+  border-color:rgba(209,162,71,0.34);
+}
+.form-card .flabel,.form-card .rs-reading,.pay-card .pay-title,.pay-card .pay-sum-val,.pay-card .pay-sum-row.total .pay-sum-label,.cal-header h3{color:#241735}
+.form-card .opt label,.form-card .consent-box .opt label,.form-card .rs-label,.pay-card .pay-subtitle,.pay-card .pay-sum-label,.cal-header p,.btn-back{color:#6a5944}
+input[type=text],input[type=email],textarea,.opt label{background:rgba(255,252,246,0.88);color:#241735;border-color:rgba(184,136,42,0.24)}
+input:focus,textarea:focus{background:#fffaf1;box-shadow:0 0 0 3px rgba(209,162,71,0.13)}
+.opt label:hover{background:#fff7e8;color:#241735}
+.cal-note,.pay-method{background:rgba(36,23,53,0.08);color:#7f6b52}
+footer{background:#0d0715}
+.faq-q{background:linear-gradient(145deg,rgba(255,250,241,0.96),rgba(242,231,211,0.94));color:#241735}
+.faq-q:hover{background:#fff7e8}
+.faq-a{background:rgba(255,250,241,0.92);color:#6a5944}
+.faq-item{border-color:rgba(209,162,71,0.28)}
+
 /* ── DISCLAIMER ── */
 #disclaimer{padding:52px 0;background:var(--bg2);position:relative;z-index:1}
 .disc-inner{max-width:880px;margin:0 auto;padding:0 24px}
@@ -304,6 +371,102 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
 .fi{opacity:0;transform:translateY(22px);transition:opacity 0.75s ease,transform 0.75s ease}
 .fi.vis{opacity:1;transform:translateY(0)}
 .fi.d1{transition-delay:0.1s}.fi.d2{transition-delay:0.2s}.fi.d3{transition-delay:0.3s}
+.fi{opacity:1!important;transform:none!important}
+.faq-q,.faq-q *{color:#241735!important}
+.faq-a,.faq-a *{color:#5f4c37!important}
+
+/* Final contrast + physical tarot card pass */
+#faq .faq-q{
+  background:linear-gradient(145deg,#fffaf1,#eadcc5)!important;
+  color:#241735!important;
+  text-shadow:none!important;
+  font-weight:500!important;
+}
+#faq .faq-arr{color:#b8862f!important}
+#faq .faq-a{background:#f7ead7!important;color:#5f4c37!important}
+.disc-box{background:linear-gradient(145deg,#fffaf1,#eadcc5)!important;color:#5f4c37!important}
+.disc-body,.disc-body p{color:#5f4c37!important}
+.disc-body strong,.disc-title{color:#8f6823!important}
+footer{background:#0d0715!important;color:rgba(248,239,226,0.7)!important}
+.foot-logo{color:#f0c766!important}
+.foot-tag,.foot-links a,.foot-note,.foot-copy{color:rgba(248,239,226,0.62)!important}
+.foot-links a:hover{color:#f0c766!important}
+.hero-cards{gap:26px;margin:52px 0 58px}
+.tc{
+  width:142px!important;
+  height:248px!important;
+  padding:0;
+  border:1px solid rgba(255,236,182,0.72);
+  border-radius:15px;
+  background:#fff8e8!important;
+  filter:drop-shadow(0 18px 24px rgba(0,0,0,0.38)) drop-shadow(0 0 18px rgba(240,199,102,0.12)) contrast(1.18) saturate(1.22)!important;
+  box-shadow:inset 0 2px 2px rgba(255,255,255,0.92),inset 0 -16px 24px rgba(72,45,24,0.11),0 0 0 5px rgba(255,248,232,0.04);
+}
+.tc>rect:first-child{fill:#fff8e8!important}
+.tc>rect:nth-child(2){stroke-width:2.2!important;opacity:0.95!important}
+.tc text{opacity:1!important;stroke:rgba(255,250,241,0.75)!important;stroke-width:0.5px!important}
+.tc [opacity]{opacity:0.82!important}
+.tc circle[fill="#d4a843"],.tc path[fill="#d4a843"],.tc circle[fill="#b8882a"],.tc path[fill="#b8882a"]{opacity:0.92!important}
+.tc:hover{
+  transform:translateY(-28px) rotate(0deg) rotateX(5deg)!important;
+  filter:drop-shadow(0 28px 42px rgba(0,0,0,0.48)) drop-shadow(0 0 24px rgba(240,199,102,0.2)) contrast(1.22) saturate(1.28)!important;
+}
+@media(max-width:700px){
+  .tc{width:118px!important;height:206px!important}
+  .hero-cards{gap:14px}
+}
+
+/* ── PREMIUM EXPERIENCE LAYER ── */
+.brand-mark{width:30px;height:30px;border:1px solid rgba(240,199,102,0.72);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;background:radial-gradient(circle at 58% 35%,rgba(240,199,102,0.18),rgba(65,39,83,0.74));box-shadow:0 0 18px rgba(240,199,102,0.16)}
+.brand-mark::before{content:'';width:11px;height:18px;border-radius:18px 0 0 18px;background:#f0c766;box-shadow:7px 0 0 rgba(18,11,30,0.92)}
+.brand-mark::after{content:'';position:absolute;bottom:5px;width:16px;height:1px;background:rgba(240,199,102,0.8)}
+.nav-logo{gap:9px}
+.foot-logo{display:flex;align-items:center;justify-content:center;gap:10px}
+.line-icon{width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(240,199,102,0.38);border-radius:50%;position:relative;color:var(--gold2);background:rgba(240,199,102,0.06);box-shadow:inset 0 0 18px rgba(240,199,102,0.05)}
+.line-icon::before,.line-icon::after{content:'';position:absolute;border-color:currentColor}
+.line-icon.card::before{width:16px;height:22px;border:1.5px solid currentColor;border-radius:3px;transform:rotate(-8deg)}
+.line-icon.card::after{width:7px;height:7px;border:1.5px solid currentColor;border-radius:50%}
+.line-icon.moon::before{width:18px;height:18px;border-radius:50%;background:currentColor}
+.line-icon.moon::after{width:18px;height:18px;border-radius:50%;background:#241735;left:15px}
+.line-icon.cross::before{width:20px;height:20px;border:1.5px solid currentColor;transform:rotate(45deg)}
+.line-icon.heart::before{width:16px;height:14px;border-left:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);border-radius:0 0 0 5px}
+.line-icon.path::before{width:18px;height:18px;border:1.5px solid currentColor;transform:rotate(45deg);border-radius:4px}
+.line-icon.lock::before{width:16px;height:12px;border:1.5px solid currentColor;border-radius:3px;bottom:7px}
+.line-icon.lock::after{width:12px;height:10px;border:1.5px solid currentColor;border-bottom:0;border-radius:9px 9px 0 0;top:6px}
+.line-icon.journal::before{width:17px;height:22px;border:1.5px solid currentColor;border-radius:3px}
+.line-icon.journal::after{height:20px;border-left:1.5px solid currentColor;left:13px}
+.line-icon.ban::before{width:20px;height:20px;border:1.5px solid currentColor;border-radius:50%}
+.line-icon.ban::after{width:21px;border-top:1.5px solid currentColor;transform:rotate(45deg)}
+.line-icon.bin::before{width:17px;height:17px;border:1.5px solid currentColor;border-top:0;bottom:7px}
+.line-icon.bin::after{width:20px;border-top:1.5px solid currentColor;top:9px}
+.line-icon.check::before{width:15px;height:8px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);top:10px}
+.line-icon.calendar::before{width:20px;height:18px;border:1.5px solid currentColor;border-radius:3px}
+.line-icon.calendar::after{width:20px;border-top:1.5px solid currentColor;top:13px}
+.line-icon.mail::before{width:21px;height:15px;border:1.5px solid currentColor;border-radius:3px}
+.line-icon.mail::after{width:15px;height:15px;border-left:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);top:6px}
+.line-icon.shield::before{width:18px;height:22px;border:1.5px solid currentColor;border-radius:10px 10px 12px 12px;clip-path:polygon(0 0,100% 0,100% 70%,50% 100%,0 70%)}
+.line-icon.letter::before{width:20px;height:16px;border:1.5px solid currentColor;border-radius:2px}
+.svc-icon,.pcard-icon,.pay-icon{font-size:0}
+.svc-icon .line-icon,.pcard-icon .line-icon{width:40px;height:40px}
+.ritual-panel{margin:36px auto 0;max-width:860px;padding:26px;border:1px solid rgba(240,199,102,0.22);border-radius:22px;background:linear-gradient(145deg,rgba(43,28,62,0.86),rgba(18,11,30,0.84));box-shadow:var(--shadow2)}
+.ritual-title{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--text);margin-bottom:14px}
+.prompt-chips{display:flex;flex-wrap:wrap;gap:10px}
+.prompt-chip{border:1px solid rgba(240,199,102,0.34);background:rgba(240,199,102,0.08);color:var(--text2);border-radius:999px;padding:10px 16px;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s}
+.prompt-chip:hover{background:rgba(240,199,102,0.17);border-color:rgba(240,199,102,0.58);transform:translateY(-1px)}
+.selected-reading-panel{display:none;margin-top:28px;padding:24px 28px;border:1px solid rgba(240,199,102,0.35);border-radius:22px;background:linear-gradient(145deg,rgba(240,199,102,0.12),rgba(43,28,62,0.88));box-shadow:var(--shadow2);align-items:center;justify-content:space-between;gap:18px}
+.selected-reading-panel.show{display:flex}
+.selected-reading-panel .sr-title{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--text);margin-bottom:3px}
+.selected-reading-panel .sr-meta{font-size:13px;color:var(--muted)}
+.premium-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:52px}
+.premium-card{border:1px solid rgba(240,199,102,0.22);border-radius:20px;padding:26px;background:linear-gradient(145deg,rgba(43,28,62,0.88),rgba(31,20,47,0.94));box-shadow:var(--shadow2)}
+.premium-card h3{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:400;color:var(--text);margin:14px 0 8px}
+.premium-card p{font-size:14px;color:var(--muted);line-height:1.82;font-weight:300}
+.reader-note{margin-top:46px;border-left:1px solid rgba(240,199,102,0.44);padding:8px 0 8px 28px;max-width:720px}
+.reader-note p{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.55;color:var(--text2);font-style:italic}
+.tc{will-change:transform}
+.tc.revealed{animation:cardReveal 0.9s cubic-bezier(0.2,0.8,0.2,1) both}
+@keyframes cardReveal{0%{transform:translateY(16px) rotateY(82deg) scale(0.92);filter:drop-shadow(0 8px 18px rgba(0,0,0,0.2)) brightness(0.7)}100%{filter:drop-shadow(0 18px 24px rgba(0,0,0,0.38)) drop-shadow(0 0 18px rgba(240,199,102,0.12)) contrast(1.18) saturate(1.22)}}
+@media(max-width:760px){.selected-reading-panel{align-items:flex-start;flex-direction:column}.ritual-panel{padding:22px}.reader-note{padding-left:18px}}
 </style>
 </head>
 <body>
@@ -336,7 +499,7 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
 
 <!-- NAV -->
 <nav id="navbar">
-  <a class="nav-logo" href="#top">🔮 The Providence Room</a>
+  <a class="nav-logo" href="#top"><span class="brand-mark"></span>The Providence Room</a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#about">About</a></li>
@@ -367,7 +530,6 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
   <div class="hero-ey">India · Online · Worldwide · Confidential</div>
   <h1>A private room for<br><em>your honest questions</em></h1>
   <p>Tarot consultations held with discretion, care, and absolute confidentiality. Your story stays in this room.</p>
-
   <!-- TAROT CARDS — Properly illustrated -->
   <div class="hero-cards">
 
@@ -623,8 +785,18 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
 
   </div>
 
+  <div class="ritual-panel" aria-label="Question prompts">
+    <div class="ritual-title">Begin with the question beneath the question</div>
+    <div class="prompt-chips">
+      <button class="prompt-chip" type="button" onclick="usePrompt('What am I not seeing clearly right now?')">What am I not seeing?</button>
+      <button class="prompt-chip" type="button" onclick="usePrompt('What needs closure, release, or gentleness?')">What needs closure?</button>
+      <button class="prompt-chip" type="button" onclick="usePrompt('What pattern keeps repeating, and what is it asking of me?')">What pattern keeps repeating?</button>
+      <button class="prompt-chip" type="button" onclick="usePrompt('What choice deserves my care before I move forward?')">What choice deserves care?</button>
+    </div>
+  </div>
+
   <div class="hero-btns">
-    <a href="#book" class="btn-gold">✦ Book a session</a>
+    <a href="#book" class="btn-gold">Book a session</a>
     <a href="#services" class="btn-out">View readings</a>
   </div>
   <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
@@ -647,29 +819,37 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
   <p class="ss">Each reading is a private conversation between you, the cards, and the unseen. Select a reading below to begin booking.</p>
   <div class="svc-grid" id="svc-grid">
     <div class="svc-card" data-reading="Single Card Pull" data-amount="500" data-duration="20–30 min" onclick="selectReading(this)">
-      <div class="svc-icon">🌙</div><div class="svc-name">Single Card Pull</div><div class="svc-tag">A moment of focused clarity</div><div class="svc-desc">One card. One question. One clear message. Ideal when you need a quick anchor or a gentle nudge from the universe.</div><div class="svc-price">₹500<span>/ session</span></div><div class="svc-dur">20–30 minutes</div>
+      <div class="svc-icon"><span class="line-icon moon"></span></div><div class="svc-name">Single Card Pull</div><div class="svc-tag">A moment of focused clarity</div><div class="svc-desc">One card. One question. One clear message. Ideal when you need a quick anchor or a gentle nudge from the universe.</div><div class="svc-price">₹500<span>/ session</span></div><div class="svc-dur">20–30 minutes</div>
       <button class="svc-select-btn">Select this reading →</button>
     </div>
     <div class="svc-card" data-reading="Three Card Spread" data-amount="800" data-duration="30–45 min" onclick="selectReading(this)">
-      <div class="svc-icon">✦</div><div class="svc-name">Three Card Spread</div><div class="svc-tag">Past · Present · Future</div><div class="svc-desc">A three-act story of where you've been, where you stand, and where you're heading. Grounding and deeply narrative.</div><div class="svc-price">₹800<span>/ session</span></div><div class="svc-dur">30–45 minutes</div>
+      <div class="svc-icon"><span class="line-icon card"></span></div><div class="svc-name">Three Card Spread</div><div class="svc-tag">Past · Present · Future</div><div class="svc-desc">A three-act story of where you've been, where you stand, and where you're heading. Grounding and deeply narrative.</div><div class="svc-price">₹800<span>/ session</span></div><div class="svc-dur">30–45 minutes</div>
       <button class="svc-select-btn">Select this reading →</button>
     </div>
     <div class="svc-card feat" data-reading="Celtic Cross" data-amount="2000" data-duration="60–75 min" onclick="selectReading(this)">
-      <div class="feat-badge">Most chosen</div><div class="svc-icon">🔮</div><div class="svc-name">Celtic Cross</div><div class="svc-tag">A deep dive into any situation</div><div class="svc-desc">Ten cards. Ten perspectives. The Celtic Cross reveals what surrounds you, what crosses you, and what lies at the root of any question.</div><div class="svc-price">₹2,000<span>/ session</span></div><div class="svc-dur">60–75 minutes</div>
+      <div class="feat-badge">Most chosen</div><div class="svc-icon"><span class="line-icon cross"></span></div><div class="svc-name">Celtic Cross</div><div class="svc-tag">A deep dive into any situation</div><div class="svc-desc">Ten cards. Ten perspectives. The Celtic Cross reveals what surrounds you, what crosses you, and what lies at the root of any question.</div><div class="svc-price">₹2,000<span>/ session</span></div><div class="svc-dur">60–75 minutes</div>
       <button class="svc-select-btn">Select this reading →</button>
     </div>
     <div class="svc-card" data-reading="Relationship Spread" data-amount="1500" data-duration="45–60 min" onclick="selectReading(this)">
-      <div class="svc-icon">♡</div><div class="svc-name">Relationship Spread</div><div class="svc-tag">Love · Family · Partnerships</div><div class="svc-desc">Explores the energy between two people — what is spoken and what is not. For love, family tensions, or any significant bond.</div><div class="svc-price">₹1,500<span>/ session</span></div><div class="svc-dur">45–60 minutes</div>
+      <div class="svc-icon"><span class="line-icon heart"></span></div><div class="svc-name">Relationship Spread</div><div class="svc-tag">Love · Family · Partnerships</div><div class="svc-desc">Explores the energy between two people — what is spoken and what is not. For love, family tensions, or any significant bond.</div><div class="svc-price">₹1,500<span>/ session</span></div><div class="svc-dur">45–60 minutes</div>
       <button class="svc-select-btn">Select this reading →</button>
     </div>
     <div class="svc-card" data-reading="Career Path Spread" data-amount="1500" data-duration="45–60 min" onclick="selectReading(this)">
-      <div class="svc-icon">◈</div><div class="svc-name">Career Path Spread</div><div class="svc-tag">Direction · Decisions · Purpose</div><div class="svc-desc">For crossroads moments. Whether to stay, go, start, or pivot — the cards illuminate what logic alone cannot.</div><div class="svc-price">₹1,500<span>/ session</span></div><div class="svc-dur">45–60 minutes</div>
+      <div class="svc-icon"><span class="line-icon path"></span></div><div class="svc-name">Career Path Spread</div><div class="svc-tag">Direction · Decisions · Purpose</div><div class="svc-desc">For crossroads moments. Whether to stay, go, start, or pivot — the cards illuminate what logic alone cannot.</div><div class="svc-price">₹1,500<span>/ session</span></div><div class="svc-dur">45–60 minutes</div>
       <button class="svc-select-btn">Select this reading →</button>
     </div>
     <div class="svc-card" data-reading="Monthly Guidance" data-amount="1200" data-duration="40–50 min" onclick="selectReading(this)">
-      <div class="svc-icon">☽</div><div class="svc-name">Monthly Guidance</div><div class="svc-tag">Themes for the month ahead</div><div class="svc-desc">A recurring ritual for those who want to move through each month with intention. What energy is arriving, what to release, what to nurture.</div><div class="svc-price">₹1,200<span>/ session</span></div><div class="svc-dur">40–50 minutes</div>
+      <div class="svc-icon"><span class="line-icon moon"></span></div><div class="svc-name">Monthly Guidance</div><div class="svc-tag">Themes for the month ahead</div><div class="svc-desc">A recurring ritual for those who want to move through each month with intention. What energy is arriving, what to release, what to nurture.</div><div class="svc-price">₹1,200<span>/ session</span></div><div class="svc-dur">40–50 minutes</div>
       <button class="svc-select-btn">Select this reading →</button>
     </div>
+  </div>
+  <div class="selected-reading-panel" id="selected-reading-panel">
+    <div>
+      <div class="ey" style="margin-bottom:7px">Selected reading</div>
+      <div class="sr-title" id="sr-title">Your reading</div>
+      <div class="sr-meta" id="sr-meta">A private reading prepared with care.</div>
+    </div>
+    <a href="#book" class="btn-gold" style="padding:13px 28px">Continue to details</a>
   </div>
 </div>
 </section>
@@ -687,26 +867,44 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
     </div>
     <div class="help-list fi d2">
       <div class="help-item">
-        <div class="help-icon">✦</div>
+        <div class="help-icon"><span class="line-icon card"></span></div>
         <div class="help-title">Clarify the question</div>
         <div class="help-desc">A reading helps turn a vague worry into a clearer focus, so the session can meet the real issue underneath the first question.</div>
       </div>
       <div class="help-item">
-        <div class="help-icon">☽</div>
+        <div class="help-icon"><span class="line-icon moon"></span></div>
         <div class="help-title">See patterns</div>
         <div class="help-desc">Cards can highlight emotional loops, repeating choices, timing, and the influences shaping a relationship, career move, or transition.</div>
       </div>
       <div class="help-item">
-        <div class="help-icon">◈</div>
+        <div class="help-icon"><span class="line-icon mail"></span></div>
         <div class="help-title">Choose a format</div>
         <div class="help-desc">Video and voice sessions unfold as live conversation. Email readings arrive as a written interpretation you can revisit privately.</div>
       </div>
       <div class="help-item">
-        <div class="help-icon">♡</div>
+        <div class="help-icon"><span class="line-icon heart"></span></div>
         <div class="help-title">Leave with language</div>
         <div class="help-desc">The goal is not fear or certainty. It is a calmer vocabulary for what you feel, what you need, and what may be worth doing next.</div>
       </div>
     </div>
+  </div>
+</div>
+</section>
+
+<!-- WHAT YOU RECEIVE -->
+<section id="receive">
+<div class="wrap fi">
+  <div class="ey">What you receive</div>
+  <div class="st">A reading you can <em>return to</em></div>
+  <p class="ss">Every format is designed to feel private, composed, and useful after the moment has passed. Email readings are treated as a private letter: thoughtful, structured, and yours to revisit.</p>
+  <div class="premium-grid">
+    <div class="premium-card"><span class="line-icon card"></span><h3>Clear card interpretation</h3><p>Each spread is translated into plain, careful language so the message feels grounded instead of theatrical.</p></div>
+    <div class="premium-card"><span class="line-icon journal"></span><h3>Reflection notes</h3><p>You leave with themes, tensions, and possible next questions you can journal with privately.</p></div>
+    <div class="premium-card"><span class="line-icon mail"></span><h3>Email readings as letters</h3><p>Written readings arrive as a considered note, not a rushed transcript. It is a quiet format for people who process slowly.</p></div>
+    <div class="premium-card"><span class="line-icon shield"></span><h3>Boundaries and privacy</h3><p>No public sharing, no spectacle, no pressure. The work stays between you, the reader, and the room.</p></div>
+  </div>
+  <div class="reader-note">
+    <p>The reader's role is not to decide your life for you. It is to help you hear the quieter part of yourself with more precision.</p>
   </div>
 </div>
 </section>
@@ -827,7 +1025,7 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
         <h3>Choose your session time</h3>
         <p>Select a date and time that works for you. All times are in IST.</p>
         <div class="cal-reading-tag">
-          <span>🔮</span>
+          <span class="line-icon card" style="width:24px;height:24px"></span>
           <span id="cal-reading-label">Select reading above</span>
           <span id="cal-duration-label" style="color:var(--faint);margin-left:4px"></span>
         </div>
@@ -840,7 +1038,7 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
         loading="lazy">
       </iframe>
       <div class="cal-note">
-        🔐 Cal.com handles scheduling privately. Your booking details are sent directly to theprovidenceroom@gmail.com.
+        Cal.com handles scheduling privately. Your booking details are sent directly to theprovidenceroom@gmail.com.
         After selecting your time, proceed to payment below.
       </div>
       <div class="cal-nav">
@@ -853,7 +1051,7 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
   <!-- STEP 3: RAZORPAY PAYMENT -->
   <div class="step-panel" id="panel3">
     <div class="pay-card">
-      <div class="pay-icon">💳</div>
+      <div class="pay-icon"><span class="line-icon card" style="width:52px;height:52px"></span></div>
       <div class="pay-title">Complete your booking</div>
       <div class="pay-subtitle">Your session time is reserved. Complete payment to confirm. You'll receive a confirmation email and calendar invite immediately after.</div>
 
@@ -881,18 +1079,18 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
       </div>
 
       <div class="pay-methods">
-        <span class="pay-method">💳 Credit / Debit Card</span>
-        <span class="pay-method">📱 UPI</span>
-        <span class="pay-method">🏦 Net Banking</span>
-        <span class="pay-method">👛 Wallets</span>
+        <span class="pay-method">Credit / Debit Card</span>
+        <span class="pay-method">UPI</span>
+        <span class="pay-method">Net Banking</span>
+        <span class="pay-method">Wallets</span>
       </div>
 
       <button class="rzp-btn" id="rzp-btn" onclick="initiatePayment()">
-        <span id="rzp-btxt">🔒 Pay Securely</span>
+        <span id="rzp-btxt">Pay Securely</span>
         <span class="rzp-spin" id="rzp-spin"></span>
       </button>
 
-      <div class="pay-secure">🔒 Secured by Razorpay · 256-bit encryption · PCI DSS compliant</div>
+      <div class="pay-secure">Secured by Razorpay · 256-bit encryption · PCI DSS compliant</div>
       <div class="pay-error" id="pay-error"></div>
 
       <div style="margin-top:20px">
@@ -903,8 +1101,8 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
 
   <!-- SUCCESS -->
   <div class="success-panel" id="success-panel">
-    <div class="confetti-line">✨ 🌙 ✦ 🔮 ✦ 🌙 ✨</div>
-    <div class="success-icon">🌟</div>
+    <div class="confetti-line">THE ROOM IS RESERVED</div>
+    <div class="success-icon"><span class="brand-mark" style="width:72px;height:72px"></span></div>
     <h2>Your session is confirmed</h2>
     <p>Payment received and booking confirmed. A confirmation email and calendar invite are on their way to you.</p>
     <p style="margin-top:8px">We look forward to holding space for you.</p>
@@ -978,12 +1176,12 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
   <div class="st">Your privacy is <em>the product</em></div>
   <p class="ss">Most practices handle client information casually. We don't. Privacy is not a policy here — it is the foundation everything is built on.</p>
   <div class="pgrid">
-    <div class="pcard fi d1"><div class="pcard-icon">🔐</div><div class="pcard-title">Alias only</div><div class="pcard-desc">We store your first name or a chosen alias. No surnames, no unnecessary personal details.</div></div>
-    <div class="pcard fi d2"><div class="pcard-icon">📓</div><div class="pcard-title">Private notes</div><div class="pcard-desc">Session notes are the reader's private professional record. Never shared, shown, or forwarded.</div></div>
-    <div class="pcard fi d3"><div class="pcard-icon">🚫</div><div class="pcard-title">No recordings</div><div class="pcard-desc">Sessions are never recorded without your explicit prior written consent.</div></div>
-    <div class="pcard fi d1"><div class="pcard-icon">🗑️</div><div class="pcard-title">Right to deletion</div><div class="pcard-desc">Request complete deletion of your data at any time. We comply within 7 days.</div></div>
-    <div class="pcard fi d2"><div class="pcard-icon">✅</div><div class="pcard-title">Explicit consent</div><div class="pcard-desc">Consent obtained before every session. You decide what we keep and what we don't.</div></div>
-    <div class="pcard fi d3"><div class="pcard-icon">📅</div><div class="pcard-title">Annual review</div><div class="pcard-desc">All client data reviewed annually and purged per India's DPDP Act 2023.</div></div>
+    <div class="pcard fi d1"><div class="pcard-icon"><span class="line-icon lock"></span></div><div class="pcard-title">Alias only</div><div class="pcard-desc">We store your first name or a chosen alias. No surnames, no unnecessary personal details.</div></div>
+    <div class="pcard fi d2"><div class="pcard-icon"><span class="line-icon journal"></span></div><div class="pcard-title">Private notes</div><div class="pcard-desc">Session notes are the reader's private professional record. Never shared, shown, or forwarded.</div></div>
+    <div class="pcard fi d3"><div class="pcard-icon"><span class="line-icon ban"></span></div><div class="pcard-title">No recordings</div><div class="pcard-desc">Sessions are never recorded without your explicit prior written consent.</div></div>
+    <div class="pcard fi d1"><div class="pcard-icon"><span class="line-icon bin"></span></div><div class="pcard-title">Right to deletion</div><div class="pcard-desc">Request complete deletion of your data at any time. We comply within 7 days.</div></div>
+    <div class="pcard fi d2"><div class="pcard-icon"><span class="line-icon check"></span></div><div class="pcard-title">Explicit consent</div><div class="pcard-desc">Consent obtained before every session. You decide what we keep and what we don't.</div></div>
+    <div class="pcard fi d3"><div class="pcard-icon"><span class="line-icon calendar"></span></div><div class="pcard-title">Annual review</div><div class="pcard-desc">All client data reviewed annually and purged per India's DPDP Act 2023.</div></div>
   </div>
 </div>
 </section>
@@ -1010,7 +1208,7 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
 <div id="disclaimer" style="padding:52px 0;background:var(--bg2);position:relative;z-index:1">
 <div class="disc-inner fi">
   <div class="disc-box">
-    <div class="disc-title">⚖ Important notice — please read</div>
+    <div class="disc-title">Important notice — please read</div>
     <div class="disc-body">
       <p><strong>Entertainment & Spiritual Purpose:</strong> Tarot readings offered by The Providence Room are intended for entertainment, spiritual guidance, and personal reflection purposes only. They do not constitute legal, financial, medical, or psychological advice of any kind.</p>
       <p><strong>No Guarantee:</strong> The Providence Room makes no claims of predicting the future with certainty. All guidance is based on the reader's interpretation of the cards and is not guaranteed to be accurate. Readings should not be used as the sole basis for any significant life decision.</p>
@@ -1024,7 +1222,7 @@ footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40p
 </div>
 
 <footer>
-  <div class="foot-logo">🔮 The Providence Room</div>
+  <div class="foot-logo"><span class="brand-mark"></span>The Providence Room</div>
   <div class="foot-tag">A private room for your most honest questions</div>
   <div class="foot-links">
     <a href="#services">Readings</a><a href="#book">Book</a>
@@ -1161,6 +1359,28 @@ document.querySelectorAll('.fi').forEach(el=>io.observe(el));
 // ── FAQ ──────────────────────────────────────────────────
 function toggleFaq(btn){ const i=btn.parentElement,o=i.classList.contains('open'); document.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('open')); if(!o)i.classList.add('open'); }
 
+// ── PREMIUM MICROINTERACTIONS ───────────────────────────
+function usePrompt(text){
+  const message = document.getElementById('message');
+  if(message){
+    message.value = text;
+    document.getElementById('book').scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(()=>message.focus(),450);
+  }
+}
+
+document.querySelectorAll('.tc').forEach((card, idx)=>{
+  card.style.animationDelay = `${idx * 90}ms`;
+  card.classList.add('revealed');
+  card.addEventListener('mousemove', e=>{
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `translateY(-20px) rotateX(${-y*8}deg) rotateY(${x*10}deg)`;
+  });
+  card.addEventListener('mouseleave', ()=>{ card.style.transform=''; });
+});
+
 // ── SERVICE SELECTION ────────────────────────────────────
 function selectReading(card){
   document.querySelectorAll('.svc-card').forEach(c=>c.classList.remove('selected'));
@@ -1173,8 +1393,23 @@ function selectReading(card){
   document.getElementById('no-reading-prompt').style.display='none';
   document.getElementById('rs-reading-name').textContent = state.reading;
   document.getElementById('rs-price').textContent = '₹' + state.amount.toLocaleString('en-IN');
-  // Scroll to booking
-  setTimeout(()=>{ document.getElementById('book').scrollIntoView({behavior:'smooth',block:'start'}); },300);
+  const panel = document.getElementById('selected-reading-panel');
+  const title = document.getElementById('sr-title');
+  const meta = document.getElementById('sr-meta');
+  const useCase = {
+    'Single Card Pull':'Best for one clear question, quick orientation, or a private written note.',
+    'Three Card Spread':'Best for understanding the shape of a situation: what led here, what is present, and what may unfold.',
+    'Celtic Cross':'Best for deep clarity when a question has layers, pressure, or emotional complexity.',
+    'Relationship Spread':'Best for seeing the spoken and unspoken energies between two people.',
+    'Career Path Spread':'Best for decisions, direction, purpose, and practical next steps.',
+    'Monthly Guidance':'Best as a recurring ritual for themes, timing, release, and intention.'
+  };
+  if(panel && title && meta){
+    title.textContent = state.reading;
+    meta.textContent = useCase[state.reading] || 'A private reading prepared with care.';
+    panel.classList.add('show');
+    setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'center'}),180);
+  }
 }
 
 function changeReading(){
