@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Providence Room — Private Tarot Consultations</title>
+<meta name="description" content="A private room for your most honest questions. Confidential tarot readings online and across India.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+:root{
+  --bg:#faf7f2;--bg2:#f5f0e8;--bg3:#f0ead8;
+  --surface:#ffffff;--card:#ffffff;--card2:#fdf9f4;
+  --border:rgba(184,136,42,0.16);--border2:rgba(184,136,42,0.32);
+  --gold:#b8882a;--gold2:#d4a843;--gold3:#f0d898;
+  --goldbg:rgba(184,136,42,0.07);--goldbg2:rgba(184,136,42,0.13);
+  --text:#1a1208;--text2:#3d2e14;--muted:#6b5c3e;--faint:#b0a080;
+  --rose:#c4837a;--rosebg:rgba(196,131,122,0.08);
+  --sage:#6b8f7e;--sagebg:rgba(107,143,126,0.09);
+  --shadow:0 2px 20px rgba(26,18,8,0.07);
+  --shadow2:0 8px 40px rgba(26,18,8,0.13);
+  --shadow3:0 20px 60px rgba(26,18,8,0.18);
+  --r:10px;--rl:18px;--rxl:28px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;font-size:16px;line-height:1.7}
+
+/* ── CANVAS ── */
+#geo{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:all 0.3s}
+nav.scrolled{padding:12px 48px;box-shadow:var(--shadow)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--gold);letter-spacing:0.05em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{padding:10px 26px;background:var(--gold);color:#fff;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;text-decoration:none;transition:all 0.2s}
+.nav-cta:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(184,136,42,0.3)}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hbg span{display:block;width:22px;height:1.5px;background:var(--gold);transition:all 0.3s}
+@media(max-width:768px){nav{padding:16px 20px}.nav-links,.nav-cta{display:none}.hbg{display:flex}}
+.mmenu{display:none;position:fixed;inset:0;background:rgba(250,247,242,0.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px}
+.mmenu.open{display:flex}
+.mmenu a{font-size:28px;font-family:'Cormorant Garamond',serif;color:var(--text);text-decoration:none}
+.mmenu a:hover{color:var(--gold)}
+.mclose{position:absolute;top:24px;right:28px;background:none;border:none;color:var(--muted);font-size:30px;cursor:pointer}
+
+/* ── SHARED ── */
+section{position:relative;z-index:1}
+.wrap{max-width:1100px;margin:0 auto;padding:96px 24px}
+.wrap.narrow{max-width:780px}
+.ey{font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500}
+.st{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:300;line-height:1.1;margin-bottom:18px;color:var(--text)}
+.st em{font-style:italic;color:var(--gold)}
+.ss{font-size:16px;color:var(--muted);font-weight:300;line-height:1.9;max-width:540px}
+.btn-gold{padding:16px 44px;background:var(--gold);color:#fff;font-size:13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.25s}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-3px);box-shadow:0 12px 32px rgba(184,136,42,0.35)}
+.btn-out{padding:16px 44px;background:transparent;color:var(--gold);font-size:13px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;border:1.5px solid var(--border2);border-radius:50px;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.25s}
+.btn-out:hover{background:var(--goldbg);transform:translateY(-3px)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 90px;overflow:hidden}
+.moon-w{margin-bottom:40px;animation:floatY 7s ease-in-out infinite,fadeUp 0.9s 0s both}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.hero-ey{font-size:12px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;font-weight:400;animation:fadeUp 0.9s 0.2s both}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,8vw,92px);font-weight:300;line-height:1.04;margin-bottom:28px;color:var(--text);animation:fadeUp 0.9s 0.4s both}
+.hero h1 em{font-style:italic;color:var(--gold);display:block}
+.hero p{font-size:17px;color:var(--muted);max-width:500px;margin:0 auto 48px;font-weight:300;line-height:1.9;animation:fadeUp 0.9s 0.6s both}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.9s 0.8s both}
+
+/* Tarot cards */
+.hero-cards{display:flex;justify-content:center;gap:22px;margin:56px 0;flex-wrap:wrap;animation:fadeUp 0.9s 0.5s both}
+.tc{width:118px;height:206px;border-radius:12px;cursor:pointer;transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1);flex-shrink:0;filter:drop-shadow(0 8px 24px rgba(26,18,8,0.18))}
+.tc:nth-child(1){transform:rotate(-9deg) translateY(10px)}
+.tc:nth-child(2){transform:rotate(-4deg) translateY(-5px)}
+.tc:nth-child(3){transform:rotate(0deg) translateY(0)}
+.tc:nth-child(4){transform:rotate(5deg) translateY(-5px)}
+.tc:nth-child(5){transform:rotate(10deg) translateY(10px)}
+.tc:hover{transform:translateY(-22px) rotate(0deg)!important;filter:drop-shadow(0 24px 48px rgba(184,136,42,0.45))!important}
+
+.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--faint);font-size:11px;letter-spacing:0.12em;animation:fadeUp 1s 1.2s both}
+.scroll-line{width:1px;height:44px;background:linear-gradient(180deg,var(--gold2),transparent);animation:scrollP 2.2s ease-in-out infinite}
+@keyframes scrollP{0%{transform:scaleY(0);transform-origin:top}49%{transform:scaleY(1);transform-origin:top}50%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ── PRIVACY BANNER ── */
+.priv-b{position:relative;z-index:1;background:linear-gradient(135deg,rgba(107,143,126,0.08),rgba(184,136,42,0.06));border-top:1px solid rgba(107,143,126,0.2);border-bottom:1px solid rgba(107,143,126,0.2);padding:18px 40px;display:flex;align-items:center;justify-content:center;gap:36px;flex-wrap:wrap}
+.pi{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--sage)}
+.pdot{width:5px;height:5px;border-radius:50%;background:var(--sage)}
+
+/* ── SERVICES ── */
+#services{background:var(--bg2)}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:56px}
+.svc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--rl);padding:32px;position:relative;overflow:hidden;transition:all 0.3s;box-shadow:var(--shadow);cursor:pointer}
+.svc-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);opacity:0;transition:opacity 0.3s}
+.svc-card:hover{transform:translateY(-5px);box-shadow:var(--shadow2);border-color:var(--border2)}
+.svc-card:hover::after{opacity:1}
+.svc-card.feat{border-color:rgba(184,136,42,0.35);background:linear-gradient(145deg,#fff,#fffbf3)}
+.svc-card.feat::after{opacity:0.6}
+.feat-badge{position:absolute;top:18px;right:18px;background:var(--gold);color:#fff;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px;font-weight:500}
+.svc-icon{font-size:28px;margin-bottom:18px}
+.svc-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;margin-bottom:6px;color:var(--text)}
+.svc-tag{font-size:13px;color:var(--gold);letter-spacing:0.04em;margin-bottom:14px;font-style:italic;font-family:'Cormorant Garamond',serif}
+.svc-desc{font-size:14px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:22px}
+.svc-price{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:var(--gold)}
+.svc-price span{font-size:13px;color:var(--faint);font-family:'Jost',sans-serif;font-weight:300;margin-left:4px}
+.svc-dur{font-size:12px;color:var(--faint);margin-top:4px}
+.svc-select-btn{margin-top:18px;width:100%;padding:11px;background:var(--goldbg);border:1.5px solid var(--border2);border-radius:50px;color:var(--gold);font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;letter-spacing:0.04em}
+.svc-select-btn:hover{background:var(--gold);color:#fff}
+.svc-card.selected{border-color:var(--gold);background:linear-gradient(145deg,#fffbf0,#fff8e8)}
+.svc-card.selected .svc-select-btn{background:var(--gold);color:#fff}
+
+/* ── 3-STEP BOOKING FLOW ── */
+#book{background:var(--bg)}
+.booking-flow{max-width:860px;margin:0 auto}
+.step-tabs{display:flex;gap:0;margin-bottom:48px;border:1.5px solid var(--border2);border-radius:50px;overflow:hidden;background:var(--surface)}
+.step-tab{flex:1;padding:14px 20px;text-align:center;cursor:default;transition:all 0.3s;font-size:13px;color:var(--faint);font-weight:400;letter-spacing:0.04em;position:relative;border:none;background:transparent;font-family:'Jost',sans-serif}
+.step-tab.active{background:var(--gold);color:#fff;font-weight:500}
+.step-tab.done{color:var(--gold);background:var(--goldbg)}
+.step-tab .tab-num{display:block;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;line-height:1.2}
+.step-tab .tab-label{display:block;font-size:11px;letter-spacing:0.08em;text-transform:uppercase}
+
+/* Step panels */
+.step-panel{display:none}
+.step-panel.active{display:block;animation:fadeUp 0.5s ease both}
+
+/* ── STEP 1: INTAKE FORM ── */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rxl);padding:52px 48px;box-shadow:var(--shadow2);position:relative;overflow:hidden}
+@media(max-width:600px){.form-card{padding:32px 22px}}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);opacity:0.7}
+.fsec{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:14px;font-weight:500}
+.fsec::after{content:'';flex:1;height:1px;background:var(--border2)}
+.fblock{margin-bottom:26px}
+.flabel{display:block;font-size:15px;font-weight:500;color:var(--text2);margin-bottom:10px}
+.flabel .req{color:var(--gold);margin-left:3px}
+.flabel .hint{font-weight:300;color:var(--faint);font-size:13px;margin-left:6px}
+input[type=text],input[type=email],textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);padding:14px 18px;color:var(--text);font-family:'Jost',sans-serif;font-size:15px;font-weight:300;outline:none;transition:all 0.2s}
+input:focus,textarea:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(184,136,42,0.1)}
+input::placeholder,textarea::placeholder{color:var(--faint);font-size:14px}
+textarea{resize:vertical;min-height:100px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:540px){.frow{grid-template-columns:1fr}}
+.ogrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ogrid.s1{grid-template-columns:1fr}
+@media(max-width:480px){.ogrid{grid-template-columns:1fr}}
+.opt{position:relative}
+.opt input[type=radio],.opt input[type=checkbox]{position:absolute;opacity:0;width:0;height:0}
+.opt label{display:flex;align-items:flex-start;gap:11px;padding:12px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all 0.15s;font-size:15px;font-weight:300;color:var(--muted);margin:0;line-height:1.4}
+.opt label:hover{border-color:var(--gold2);color:var(--text);background:#fffbf3}
+.opt input:checked+label{border-color:var(--gold);background:var(--goldbg2);color:var(--gold)}
+.odot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--faint);flex-shrink:0;margin-top:3px;position:relative;transition:all 0.15s}
+.opt input:checked+label .odot{border-color:var(--gold);background:var(--gold)}
+.opt input:checked+label .odot::after{content:'';position:absolute;inset:3px;background:#fff;border-radius:50%}
+.ochk{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--faint);flex-shrink:0;margin-top:3px;position:relative;transition:all 0.15s}
+.opt input[type=checkbox]:checked+label .ochk{border-color:var(--gold);background:var(--gold)}
+.opt input[type=checkbox]:checked+label .ochk::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700}
+.pnote{font-size:12px;color:var(--gold2);display:block;margin-top:3px}
+.consent-box{background:var(--goldbg);border:1.5px solid var(--border2);border-radius:var(--r);padding:20px;margin-top:30px}
+.consent-box .opt label{background:transparent;border:none;padding:0;color:var(--muted);font-size:14px;line-height:1.75}
+.consent-box .opt label:hover,.consent-box .opt input:checked+label{background:transparent;border:none;color:var(--text2)}
+
+/* Selected reading summary bar */
+.reading-summary{background:linear-gradient(135deg,var(--goldbg2),var(--goldbg));border:1.5px solid var(--border2);border-radius:var(--r);padding:16px 22px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.rs-label{font-size:14px;color:var(--muted);font-weight:300}
+.rs-reading{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--text)}
+.rs-price{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);font-weight:400}
+.rs-change{font-size:12px;color:var(--gold);cursor:pointer;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+
+/* Step 1 nav btn */
+.step-nav{display:flex;justify-content:flex-end;margin-top:32px;gap:14px;align-items:center}
+.step-nav-note{font-size:13px;color:var(--faint);font-weight:300}
+
+/* ── STEP 2: CALENDAR ── */
+.cal-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--rxl);overflow:hidden;box-shadow:var(--shadow2);position:relative}
+.cal-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);opacity:0.7;z-index:2}
+.cal-header{padding:28px 36px 0;background:var(--surface)}
+.cal-header h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--text);margin-bottom:6px}
+.cal-header p{font-size:14px;color:var(--muted);font-weight:300;margin-bottom:20px}
+.cal-reading-tag{display:inline-flex;align-items:center;gap:8px;background:var(--goldbg2);border:1px solid var(--border2);border-radius:50px;padding:7px 16px;font-size:13px;color:var(--gold);font-weight:400;margin-bottom:24px}
+.cal-embed{width:100%;height:700px;border:none;background:var(--surface)}
+.cal-note{padding:16px 36px;background:var(--bg2);border-top:1px solid var(--border);font-size:12px;color:var(--faint);text-align:center;font-weight:300}
+.cal-nav{padding:24px 36px;background:var(--surface);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+.btn-back{padding:12px 28px;background:transparent;color:var(--muted);font-family:'Jost',sans-serif;font-size:13px;border:1.5px solid var(--border);border-radius:50px;cursor:pointer;transition:all 0.2s}
+.btn-back:hover{border-color:var(--border2);color:var(--text)}
+
+/* ── STEP 3: PAYMENT ── */
+.pay-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rxl);padding:52px 48px;box-shadow:var(--shadow2);position:relative;overflow:hidden;text-align:center}
+@media(max-width:600px){.pay-card{padding:32px 22px}}
+.pay-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);opacity:0.7}
+.pay-icon{font-size:52px;margin-bottom:20px}
+.pay-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--text);margin-bottom:12px}
+.pay-subtitle{font-size:15px;color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
+.pay-summary{background:var(--goldbg);border:1.5px solid var(--border2);border-radius:var(--rl);padding:24px 32px;margin-bottom:32px;text-align:left}
+.pay-sum-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.pay-sum-row:last-child{border-bottom:none;padding-top:14px}
+.pay-sum-label{font-size:14px;color:var(--muted);font-weight:300}
+.pay-sum-val{font-size:15px;color:var(--text2);font-weight:400}
+.pay-sum-row.total .pay-sum-label{font-size:16px;color:var(--text);font-weight:500}
+.pay-sum-row.total .pay-sum-val{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold);font-weight:400}
+.pay-methods{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.pay-method{display:flex;align-items:center;gap:7px;padding:8px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:12px;color:var(--muted);font-weight:300}
+.rzp-btn{display:inline-flex;align-items:center;gap:12px;padding:20px 60px;background:linear-gradient(135deg,var(--gold),#9a6e2a);color:#fff;font-family:'Jost',sans-serif;font-size:16px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;transition:all 0.25s;box-shadow:0 6px 24px rgba(184,136,42,0.3)}
+.rzp-btn:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(184,136,42,0.45)}
+.rzp-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.pay-secure{font-size:12px;color:var(--faint);margin-top:16px;display:flex;align-items:center;gap:6px;justify-content:center}
+.rzp-spin{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pay-error{display:none;background:var(--rosebg);border:1px solid rgba(196,131,122,0.3);border-radius:var(--r);padding:14px 18px;font-size:14px;color:var(--rose);margin-top:16px;text-align:center}
+
+/* ── SUCCESS ── */
+.success-panel{display:none;text-align:center;padding:72px 24px;animation:fadeUp 0.6s ease both}
+.success-panel.show{display:block}
+.success-icon{font-size:72px;margin-bottom:28px}
+.success-panel h2{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--gold);margin-bottom:16px}
+.success-panel p{font-size:16px;color:var(--muted);font-weight:300;line-height:1.9;max-width:480px;margin:0 auto 12px}
+.success-detail{font-size:13px;color:var(--faint);margin-top:6px}
+.confetti-line{display:flex;justify-content:center;gap:16px;font-size:24px;margin:24px 0}
+
+/* ── ABOUT ── */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-top:56px}
+@media(max-width:768px){.about-grid{grid-template-columns:1fr}}
+.about-text p{font-size:15px;color:var(--muted);font-weight:300;line-height:1.95;margin-bottom:18px}
+.about-text p.lead{font-size:19px;color:var(--text2);font-family:'Cormorant Garamond',serif;font-style:italic;line-height:1.7}
+.vals{margin-top:28px;display:flex;flex-direction:column;gap:13px}
+.val{display:flex;align-items:flex-start;gap:13px;font-size:14px;color:var(--muted);font-weight:300}
+.vdot{color:var(--gold);font-size:16px;flex-shrink:0;margin-top:2px}
+
+/* ── TESTIMONIALS ── */
+#testimonials{background:var(--surface)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:56px}
+.tcard{background:var(--card2);border:1px solid var(--border);border-radius:var(--rl);padding:32px;position:relative;overflow:hidden;transition:all 0.3s;box-shadow:var(--shadow)}
+.tcard:hover{transform:translateY(-4px);box-shadow:var(--shadow2);border-color:var(--border2)}
+.tcard::before{content:'\201C';position:absolute;top:12px;right:20px;font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--rose);opacity:0.14;line-height:1}
+.t-stars{color:var(--gold2);font-size:13px;margin-bottom:12px;letter-spacing:3px}
+.t-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text2);line-height:1.78;margin-bottom:20px;font-weight:300}
+.t-meta{font-size:12px;color:var(--faint);letter-spacing:0.05em}
+
+/* ── PRIVACY ── */
+#privacy{background:var(--bg2)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:56px}
+.pcard{background:var(--surface);border:1px solid rgba(107,143,126,0.25);border-radius:var(--rl);padding:28px;transition:all 0.3s;box-shadow:var(--shadow)}
+.pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow2);border-color:rgba(107,143,126,0.45)}
+.pcard-icon{font-size:30px;margin-bottom:16px}
+.pcard-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin-bottom:10px;color:var(--text)}
+.pcard-desc{font-size:14px;color:var(--muted);font-weight:300;line-height:1.8}
+
+/* ── FAQ ── */
+#faq{background:var(--surface)}
+.faq-list{margin-top:56px;display:flex;flex-direction:column;gap:4px}
+.faq-item{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;cursor:pointer;font-size:17px;font-family:'Cormorant Garamond',serif;font-weight:400;color:var(--text);background:var(--surface);transition:background 0.2s;gap:16px;border:none;width:100%;text-align:left}
+.faq-q:hover{background:var(--card2)}
+.faq-arr{color:var(--gold2);font-size:22px;transition:transform 0.3s;flex-shrink:0}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s;background:var(--card2);font-size:15px;color:var(--muted);font-weight:300;line-height:1.9;padding:0 28px}
+.faq-item.open .faq-a{max-height:320px;padding:0 28px 22px}
+.faq-item.open .faq-arr{transform:rotate(45deg)}
+
+/* ── DISCLAIMER ── */
+#disclaimer{padding:52px 0;background:var(--bg2);position:relative;z-index:1}
+.disc-inner{max-width:880px;margin:0 auto;padding:0 24px}
+.disc-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);padding:40px 44px;box-shadow:var(--shadow)}
+@media(max-width:600px){.disc-box{padding:28px 22px}}
+.disc-title{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;font-weight:500}
+.disc-body{font-size:13px;color:var(--muted);line-height:2;font-weight:300}
+.disc-body p{margin-bottom:13px}
+.disc-body p:last-child{margin-bottom:0}
+.disc-body strong{color:var(--text2);font-weight:500}
+
+/* ── FOOTER ── */
+footer{background:var(--text);color:rgba(255,255,255,0.65);padding:60px 40px 40px;text-align:center;position:relative;z-index:1}
+.foot-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--gold3);margin-bottom:8px}
+.foot-tag{font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:0.1em;margin-bottom:40px}
+.foot-links{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.foot-links a{font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s}
+.foot-links a:hover{color:var(--gold3)}
+.foot-note{font-size:12px;color:rgba(255,255,255,0.25);line-height:1.9;max-width:580px;margin:0 auto 28px}
+.foot-copy{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:0.07em}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.fi{opacity:0;transform:translateY(22px);transition:opacity 0.75s ease,transform 0.75s ease}
+.fi.vis{opacity:1;transform:translateY(0)}
+.fi.d1{transition-delay:0.1s}.fi.d2{transition-delay:0.2s}.fi.d3{transition-delay:0.3s}
+</style>
+</head>
+<body>
+
+<canvas id="geo"></canvas>
+
+<!-- Mobile menu -->
+<div class="mmenu" id="mmenu">
+  <button class="mclose" onclick="closeMobile()">✕</button>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#book" onclick="closeMobile()">Book</a>
+  <a href="#privacy" onclick="closeMobile()">Privacy</a>
+  <a href="#faq" onclick="closeMobile()">FAQ</a>
+  <a href="#book" onclick="closeMobile()" style="color:var(--gold)">Book a Session</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#top">🔮 The Providence Room</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#book" class="nav-cta">Book a Session</a>
+  <button class="hbg" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <!-- Moon -->
+  <div class="moon-w">
+    <svg width="92" height="92" viewBox="0 0 92 92" fill="none" style="filter:drop-shadow(0 4px 20px rgba(184,136,42,0.4))">
+      <circle cx="46" cy="46" r="42" stroke="#b8882a" stroke-width="0.8" opacity="0.18" stroke-dasharray="3 7"/>
+      <circle cx="46" cy="46" r="34" fill="rgba(184,136,42,0.07)" stroke="#b8882a" stroke-width="0.5" opacity="0.22"/>
+      <path d="M46 14C46 14 31 25 31 46C31 67 46 78 46 78C26.5 78 14 63.7 14 46C14 28.3 26.5 14 46 14Z" fill="#b8882a" opacity="0.88"/>
+      <path d="M46 18C46 18 61 29 61 46C61 63 46 74 46 74" stroke="#d4a843" stroke-width="0.6" opacity="0.28"/>
+      <circle cx="38" cy="37" r="2.5" fill="rgba(255,255,255,0.22)"/>
+      <circle cx="42" cy="54" r="1.5" fill="rgba(255,255,255,0.16)"/>
+      <!-- Crescent dots -->
+      <circle cx="28" cy="42" r="1" fill="#d4a843" opacity="0.5"/>
+      <circle cx="30" cy="52" r="1" fill="#d4a843" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <div class="hero-ey">India · Online · Worldwide · Confidential</div>
+  <h1>A private room for<br><em>your honest questions</em></h1>
+  <p>Tarot consultations held with discretion, care, and absolute confidentiality. Your story stays in this room.</p>
+
+  <!-- TAROT CARDS — Properly illustrated -->
+  <div class="hero-cards">
+
+    <!-- I. THE MAGICIAN -->
+    <svg class="tc" viewBox="0 0 118 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="118" height="206" rx="11" fill="#fef9f0"/>
+      <rect x="1.5" y="1.5" width="115" height="203" rx="10" stroke="#b8882a" stroke-width="1.2" opacity="0.55"/>
+      <!-- Ornate border -->
+      <rect x="7" y="7" width="104" height="192" rx="7" stroke="#b8882a" stroke-width="0.5" opacity="0.22"/>
+      <!-- Corner ornaments -->
+      <path d="M7 20 L7 7 L20 7" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M111 20 L111 7 L98 7" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M7 186 L7 199 L20 199" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M111 186 L111 199 L98 199" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <!-- Roman numeral -->
+      <text x="59" y="24" text-anchor="middle" font-family="serif" font-size="11" fill="#b8882a" opacity="0.7" letter-spacing="2">I</text>
+      <!-- Lemniscate (infinity) above figure -->
+      <path d="M44 42 C44 37 50 35 55 38 C60 41 65 41 68 38 C71 35 74 37 74 42 C74 47 68 49 65 46 C62 43 56 43 53 46 C50 49 44 47 44 42Z" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.65"/>
+      <!-- Figure — robed man at table -->
+      <circle cx="59" cy="58" r="9" fill="none" stroke="#b8882a" stroke-width="0.8" opacity="0.55"/>
+      <!-- Robe -->
+      <path d="M50 67 Q59 62 68 67 L72 110 Q59 118 46 110Z" fill="#f5ede0" stroke="#b8882a" stroke-width="0.6" opacity="0.6"/>
+      <!-- Table -->
+      <rect x="32" y="110" width="54" height="4" rx="1" fill="#e8d8b8" stroke="#b8882a" stroke-width="0.5" opacity="0.5"/>
+      <line x1="38" y1="114" x2="38" y2="130" stroke="#b8882a" stroke-width="0.5" opacity="0.4"/>
+      <line x1="80" y1="114" x2="80" y2="130" stroke="#b8882a" stroke-width="0.5" opacity="0.4"/>
+      <!-- Table items: cup, wand, sword, pentacle -->
+      <circle cx="42" cy="108" r="3" fill="none" stroke="#b8882a" stroke-width="0.7" opacity="0.5"/>
+      <line x1="51" y1="102" x2="51" y2="110" stroke="#b8882a" stroke-width="1" opacity="0.5"/>
+      <path d="M58 108 L62 108 L60 104Z" fill="none" stroke="#b8882a" stroke-width="0.6" opacity="0.5"/>
+      <circle cx="70" cy="107" r="3" fill="none" stroke="#b8882a" stroke-width="0.6" opacity="0.5"/>
+      <circle cx="70" cy="107" r="1" fill="#b8882a" opacity="0.4"/>
+      <!-- Raised wand arm -->
+      <line x1="59" y1="67" x2="68" y2="50" stroke="#b8882a" stroke-width="1.2" opacity="0.55"/>
+      <circle cx="68" cy="48" r="2.5" fill="#d4a843" opacity="0.7"/>
+      <!-- Gardens/flowers bottom -->
+      <path d="M25 140 Q30 132 35 140 Q30 148 25 140Z" fill="#d4a843" opacity="0.3"/>
+      <path d="M40 136 Q45 128 50 136 Q45 144 40 136Z" fill="#d4a843" opacity="0.25"/>
+      <path d="M68 136 Q73 128 78 136 Q73 144 68 136Z" fill="#d4a843" opacity="0.25"/>
+      <path d="M83 140 Q88 132 93 140 Q88 148 83 140Z" fill="#d4a843" opacity="0.3"/>
+      <!-- Roses -->
+      <circle cx="32" cy="150" r="5" fill="none" stroke="#c4837a" stroke-width="0.6" opacity="0.4"/>
+      <circle cx="86" cy="150" r="5" fill="none" stroke="#c4837a" stroke-width="0.6" opacity="0.4"/>
+      <circle cx="32" cy="150" r="2" fill="#c4837a" opacity="0.3"/>
+      <circle cx="86" cy="150" r="2" fill="#c4837a" opacity="0.3"/>
+      <!-- Name banner -->
+      <rect x="14" y="183" width="90" height="16" rx="3" fill="#f5ede0" stroke="#b8882a" stroke-width="0.5" opacity="0.4"/>
+      <text x="59" y="195" text-anchor="middle" font-family="serif" font-size="8" fill="#b8882a" opacity="0.75" letter-spacing="1.5">THE MAGICIAN</text>
+    </svg>
+
+    <!-- II. THE HIGH PRIESTESS -->
+    <svg class="tc" viewBox="0 0 118 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="118" height="206" rx="11" fill="#fdf8f4"/>
+      <rect x="1.5" y="1.5" width="115" height="203" rx="10" stroke="#b8882a" stroke-width="1.2" opacity="0.55"/>
+      <rect x="7" y="7" width="104" height="192" rx="7" stroke="#b8882a" stroke-width="0.5" opacity="0.22"/>
+      <path d="M7 20 L7 7 L20 7" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M111 20 L111 7 L98 7" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M7 186 L7 199 L20 199" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M111 186 L111 199 L98 199" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <text x="59" y="24" text-anchor="middle" font-family="serif" font-size="11" fill="#b8882a" opacity="0.7" letter-spacing="2">II</text>
+      <!-- Two pillars -->
+      <rect x="16" y="28" width="13" height="130" rx="2" fill="#f0e8d4" stroke="#b8882a" stroke-width="0.7" opacity="0.65"/>
+      <rect x="89" y="28" width="13" height="130" rx="2" fill="#f0e8d4" stroke="#b8882a" stroke-width="0.7" opacity="0.65"/>
+      <!-- Pillar caps -->
+      <rect x="14" y="26" width="17" height="5" rx="1" fill="#e0cfa8" stroke="#b8882a" stroke-width="0.5" opacity="0.5"/>
+      <rect x="87" y="26" width="17" height="5" rx="1" fill="#e0cfa8" stroke="#b8882a" stroke-width="0.5" opacity="0.5"/>
+      <!-- B and J letters -->
+      <text x="22" y="50" text-anchor="middle" font-size="9" fill="#b8882a" opacity="0.6" font-weight="bold">B</text>
+      <text x="96" y="50" text-anchor="middle" font-size="9" fill="#b8882a" opacity="0.6" font-weight="bold">J</text>
+      <!-- Crown — crescent + sphere -->
+      <circle cx="59" cy="34" r="6" fill="none" stroke="#b8882a" stroke-width="0.8" opacity="0.55"/>
+      <circle cx="59" cy="34" r="3" fill="#d4a843" opacity="0.4"/>
+      <path d="M48 40 Q59 34 70 40" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <!-- Face/head -->
+      <circle cx="59" cy="54" r="11" fill="none" stroke="#b8882a" stroke-width="0.7" opacity="0.45"/>
+      <!-- Veil/robe flowing -->
+      <path d="M42 65 Q59 58 76 65 L80 148 Q59 158 38 148Z" fill="#e8f0ed" stroke="#6b8f7e" stroke-width="0.5" opacity="0.6"/>
+      <!-- Blue robe middle -->
+      <path d="M51 65 Q59 60 67 65 L66 145 Q59 152 52 145Z" fill="#dde8f0" stroke="#b8882a" stroke-width="0.4" opacity="0.4"/>
+      <!-- Scroll/Torah -->
+      <rect x="50" y="88" width="18" height="30" rx="3" fill="#faf0dc" stroke="#b8882a" stroke-width="0.5" opacity="0.55"/>
+      <text x="59" y="98" text-anchor="middle" font-size="6" fill="#b8882a" opacity="0.5">TORA</text>
+      <line x1="53" y1="104" x2="65" y2="104" stroke="#b8882a" stroke-width="0.3" opacity="0.4"/>
+      <line x1="53" y1="109" x2="65" y2="109" stroke="#b8882a" stroke-width="0.3" opacity="0.4"/>
+      <!-- Cross on robe -->
+      <line x1="59" y1="68" x2="59" y2="82" stroke="#b8882a" stroke-width="1" opacity="0.4"/>
+      <line x1="53" y1="74" x2="65" y2="74" stroke="#b8882a" stroke-width="1" opacity="0.4"/>
+      <!-- Crescent at feet -->
+      <path d="M46 150 Q59 143 72 150 Q59 160 46 150Z" stroke="#b8882a" stroke-width="0.7" fill="#f0e8d4" opacity="0.5"/>
+      <!-- Pomegranate curtain top -->
+      <circle cx="30" cy="16" r="3" fill="#c4837a" opacity="0.3"/>
+      <circle cx="44" cy="14" r="2.5" fill="#c4837a" opacity="0.25"/>
+      <circle cx="59" cy="13" r="3" fill="#c4837a" opacity="0.3"/>
+      <circle cx="74" cy="14" r="2.5" fill="#c4837a" opacity="0.25"/>
+      <circle cx="88" cy="16" r="3" fill="#c4837a" opacity="0.3"/>
+      <rect x="14" y="183" width="90" height="16" rx="3" fill="#f5ede0" stroke="#b8882a" stroke-width="0.5" opacity="0.4"/>
+      <text x="59" y="195" text-anchor="middle" font-family="serif" font-size="7.5" fill="#b8882a" opacity="0.75" letter-spacing="0.5">HIGH PRIESTESS</text>
+    </svg>
+
+    <!-- XVII. THE STAR -->
+    <svg class="tc" viewBox="0 0 118 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="118" height="206" rx="11" fill="#fdf9f5"/>
+      <rect x="1.5" y="1.5" width="115" height="203" rx="10" stroke="#9b72f5" stroke-width="1.2" opacity="0.5"/>
+      <rect x="7" y="7" width="104" height="192" rx="7" stroke="#9b72f5" stroke-width="0.5" opacity="0.2"/>
+      <path d="M7 20 L7 7 L20 7" stroke="#9b72f5" stroke-width="1" fill="none" opacity="0.4"/>
+      <path d="M111 20 L111 7 L98 7" stroke="#9b72f5" stroke-width="1" fill="none" opacity="0.4"/>
+      <path d="M7 186 L7 199 L20 199" stroke="#9b72f5" stroke-width="1" fill="none" opacity="0.4"/>
+      <path d="M111 186 L111 199 L98 199" stroke="#9b72f5" stroke-width="1" fill="none" opacity="0.4"/>
+      <text x="59" y="24" text-anchor="middle" font-family="serif" font-size="9" fill="#9b72f5" opacity="0.65" letter-spacing="1">XVII</text>
+      <!-- Large 8-pointed star -->
+      <path d="M59 18 L61.5 31 L74 23 L66 34 L79 36 L66 40 L74 51 L61.5 45 L59 58 L56.5 45 L44 51 L52 40 L39 36 L52 34 L44 23 L56.5 31Z" fill="#d4a843" opacity="0.8"/>
+      <!-- 7 smaller stars -->
+      <path d="M25 18L26.5 23H32L28 26L29.5 31L25 28L20.5 31L22 26L18 23H23.5Z" fill="#b8882a" opacity="0.55"/>
+      <path d="M88 14L89.5 19H95L91 22L92.5 27L88 24L83.5 27L85 22L81 19H86.5Z" fill="#b8882a" opacity="0.5"/>
+      <path d="M18 52L19 56H23L20 58L21 62L18 60L15 62L16 58L13 56H17Z" fill="#b8882a" opacity="0.45"/>
+      <path d="M97 48L98 52H102L99 54L100 58L97 56L94 58L95 54L92 52H96Z" fill="#b8882a" opacity="0.45"/>
+      <path d="M30 35L31 38H34L32 40L33 43L30 41L27 43L28 40L26 38H29Z" fill="#b8882a" opacity="0.4"/>
+      <path d="M88 35L89 38H92L90 40L91 43L88 41L85 43L86 40L84 38H87Z" fill="#b8882a" opacity="0.4"/>
+      <path d="M100 25L101 28H104L102 30L103 33L100 31L97 33L98 30L96 28H99Z" fill="#b8882a" opacity="0.35"/>
+      <!-- Kneeling nude figure -->
+      <circle cx="55" cy="108" r="8" fill="none" stroke="#b8882a" stroke-width="0.7" opacity="0.5"/>
+      <!-- Body -->
+      <path d="M48 116 Q55 112 62 116 L66 140 L44 140Z" fill="#f0e4cc" stroke="#b8882a" stroke-width="0.5" opacity="0.5"/>
+      <!-- Arms pouring water -->
+      <line x1="48" y1="120" x2="36" y2="130" stroke="#b8882a" stroke-width="0.8" opacity="0.5"/>
+      <line x1="62" y1="120" x2="74" y2="128" stroke="#b8882a" stroke-width="0.8" opacity="0.5"/>
+      <!-- Water jugs/vessels -->
+      <path d="M30 128 L38 133 L34 140 Z" fill="#dde8f0" stroke="#6b8f7e" stroke-width="0.5" opacity="0.5"/>
+      <path d="M70 125 L78 130 L74 137 Z" fill="#dde8f0" stroke="#6b8f7e" stroke-width="0.5" opacity="0.5"/>
+      <!-- Water flowing -->
+      <path d="M36 133 Q40 140 35 148 Q32 152 38 155" stroke="#6b8f7e" stroke-width="0.7" fill="none" opacity="0.4"/>
+      <path d="M74 130 Q78 137 75 145" stroke="#6b8f7e" stroke-width="0.7" fill="none" opacity="0.4"/>
+      <!-- Pool of water -->
+      <ellipse cx="59" cy="158" rx="28" ry="8" fill="#dde8f0" stroke="#6b8f7e" stroke-width="0.5" opacity="0.45"/>
+      <!-- Tree with ibis bird -->
+      <line x1="95" y1="160" x2="95" y2="130" stroke="#b8882a" stroke-width="1" opacity="0.4"/>
+      <circle cx="95" cy="125" r="5" fill="#d4a843" opacity="0.3"/>
+      <!-- Ground/earth -->
+      <path d="M15 163 Q59 158 103 163 L103 170 Q59 168 15 170Z" fill="#e8d8b8" opacity="0.4"/>
+      <rect x="14" y="183" width="90" height="16" rx="3" fill="#f5ede0" stroke="#9b72f5" stroke-width="0.5" opacity="0.35"/>
+      <text x="59" y="195" text-anchor="middle" font-family="serif" font-size="8" fill="#9b72f5" opacity="0.7" letter-spacing="1.5">THE STAR</text>
+    </svg>
+
+    <!-- XVIII. THE MOON -->
+    <svg class="tc" viewBox="0 0 118 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="118" height="206" rx="11" fill="#fdf8f0"/>
+      <rect x="1.5" y="1.5" width="115" height="203" rx="10" stroke="#b8882a" stroke-width="1.2" opacity="0.55"/>
+      <rect x="7" y="7" width="104" height="192" rx="7" stroke="#b8882a" stroke-width="0.5" opacity="0.22"/>
+      <path d="M7 20 L7 7 L20 7" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M111 20 L111 7 L98 7" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M7 186 L7 199 L20 199" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M111 186 L111 199 L98 199" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.45"/>
+      <text x="59" y="24" text-anchor="middle" font-family="serif" font-size="9" fill="#b8882a" opacity="0.7" letter-spacing="1">XVIII</text>
+      <!-- Moon face with crescent -->
+      <circle cx="59" cy="46" r="20" fill="#faf0d8" stroke="#b8882a" stroke-width="0.8" opacity="0.5"/>
+      <path d="M59 26C59 26 45 34 45 46C45 58 59 66 59 66C48 66 38 57.5 38 46C38 34.5 48 26 59 26Z" fill="#b8882a" opacity="0.75"/>
+      <!-- Moon face features -->
+      <circle cx="52" cy="42" r="1.5" fill="#3d2e14" opacity="0.45"/>
+      <circle cx="65" cy="42" r="1.5" fill="#3d2e14" opacity="0.45"/>
+      <path d="M53 50 Q59 55 65 50" stroke="#3d2e14" stroke-width="0.7" fill="none" opacity="0.35"/>
+      <!-- Yod drops falling from moon -->
+      <path d="M48 66 Q46 72 48 76" stroke="#b8882a" stroke-width="0.6" fill="none" opacity="0.4"/>
+      <path d="M54 68 Q52 75 54 80" stroke="#b8882a" stroke-width="0.6" fill="none" opacity="0.35"/>
+      <path d="M59 68 Q59 75 59 80" stroke="#b8882a" stroke-width="0.6" fill="none" opacity="0.4"/>
+      <path d="M64 68 Q66 75 64 80" stroke="#b8882a" stroke-width="0.6" fill="none" opacity="0.35"/>
+      <path d="M70 66 Q72 72 70 76" stroke="#b8882a" stroke-width="0.6" fill="none" opacity="0.4"/>
+      <!-- Two towers -->
+      <rect x="15" y="105" width="16" height="60" rx="2" fill="#f0e8d4" stroke="#b8882a" stroke-width="0.7" opacity="0.6"/>
+      <rect x="87" y="105" width="16" height="60" rx="2" fill="#f0e8d4" stroke="#b8882a" stroke-width="0.7" opacity="0.6"/>
+      <!-- Tower battlements -->
+      <rect x="15" y="100" width="4" height="8" fill="#e0cfa8" stroke="#b8882a" stroke-width="0.4" opacity="0.5"/>
+      <rect x="21" y="100" width="4" height="8" fill="#e0cfa8" stroke="#b8882a" stroke-width="0.4" opacity="0.5"/>
+      <rect x="27" y="100" width="4" height="8" fill="#e0cfa8" stroke="#b8882a" stroke-width="0.4" opacity="0.5"/>
+      <rect x="87" y="100" width="4" height="8" fill="#e0cfa8" stroke="#b8882a" stroke-width="0.4" opacity="0.5"/>
+      <rect x="93" y="100" width="4" height="8" fill="#e0cfa8" stroke="#b8882a" stroke-width="0.4" opacity="0.5"/>
+      <rect x="99" y="100" width="4" height="8" fill="#e0cfa8" stroke="#b8882a" stroke-width="0.4" opacity="0.5"/>
+      <!-- Tower windows -->
+      <rect x="20" y="125" width="6" height="9" rx="3" fill="#dde8f0" stroke="#b8882a" stroke-width="0.4" opacity="0.45"/>
+      <rect x="92" y="125" width="6" height="9" rx="3" fill="#dde8f0" stroke="#b8882a" stroke-width="0.4" opacity="0.45"/>
+      <!-- Path between towers -->
+      <path d="M31 165 Q59 155 87 165" stroke="#b8882a" stroke-width="0.6" fill="none" opacity="0.35"/>
+      <path d="M31 160 Q59 150 87 160" stroke="#b8882a" stroke-width="0.4" fill="none" opacity="0.25"/>
+      <!-- Pool at bottom -->
+      <ellipse cx="59" cy="155" rx="30" ry="10" fill="#dde8f0" stroke="#6b8f7e" stroke-width="0.5" opacity="0.5"/>
+      <!-- Dog and wolf howling -->
+      <path d="M38 142 Q42 130 46 135 Q44 140 46 145" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <path d="M72 142 Q76 130 80 135 Q78 140 80 145" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <!-- Crayfish in pool -->
+      <circle cx="59" cy="155" r="5" fill="none" stroke="#c4837a" stroke-width="0.6" opacity="0.45"/>
+      <path d="M54 152 L50 148 M64 152 L68 148" stroke="#c4837a" stroke-width="0.5" opacity="0.4"/>
+      <rect x="14" y="183" width="90" height="16" rx="3" fill="#f5ede0" stroke="#b8882a" stroke-width="0.5" opacity="0.4"/>
+      <text x="59" y="195" text-anchor="middle" font-family="serif" font-size="8" fill="#b8882a" opacity="0.75" letter-spacing="1.5">THE MOON</text>
+    </svg>
+
+    <!-- XIX. THE SUN -->
+    <svg class="tc" viewBox="0 0 118 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="118" height="206" rx="11" fill="#fffef5"/>
+      <rect x="1.5" y="1.5" width="115" height="203" rx="10" stroke="#d4a843" stroke-width="1.2" opacity="0.6"/>
+      <rect x="7" y="7" width="104" height="192" rx="7" stroke="#d4a843" stroke-width="0.5" opacity="0.22"/>
+      <path d="M7 20 L7 7 L20 7" stroke="#d4a843" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M111 20 L111 7 L98 7" stroke="#d4a843" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M7 186 L7 199 L20 199" stroke="#d4a843" stroke-width="1" fill="none" opacity="0.45"/>
+      <path d="M111 186 L111 199 L98 199" stroke="#d4a843" stroke-width="1" fill="none" opacity="0.45"/>
+      <text x="59" y="24" text-anchor="middle" font-family="serif" font-size="9" fill="#d4a843" opacity="0.7" letter-spacing="1">XIX</text>
+      <!-- Sun with face -->
+      <circle cx="59" cy="52" r="24" fill="#fdf0c0" stroke="#d4a843" stroke-width="1" opacity="0.75"/>
+      <circle cx="59" cy="52" r="17" fill="#f8e070" opacity="0.5"/>
+      <!-- Sun face -->
+      <circle cx="53" cy="48" r="2" fill="#b8882a" opacity="0.65"/>
+      <circle cx="65" cy="48" r="2" fill="#b8882a" opacity="0.65"/>
+      <path d="M52 57 Q59 63 66 57" stroke="#b8882a" stroke-width="1" fill="none" opacity="0.6"/>
+      <!-- Nose -->
+      <path d="M59 50 L57 56 L61 56" stroke="#b8882a" stroke-width="0.6" fill="none" opacity="0.4"/>
+      <!-- Straight rays -->
+      <line x1="59" y1="20" x2="59" y2="12" stroke="#d4a843" stroke-width="1.5" opacity="0.65"/>
+      <line x1="59" y1="84" x2="59" y2="92" stroke="#d4a843" stroke-width="1.5" opacity="0.65"/>
+      <line x1="27" y1="52" x2="19" y2="52" stroke="#d4a843" stroke-width="1.5" opacity="0.65"/>
+      <line x1="91" y1="52" x2="99" y2="52" stroke="#d4a843" stroke-width="1.5" opacity="0.65"/>
+      <!-- Diagonal rays -->
+      <line x1="38" y1="31" x2="32" y2="25" stroke="#d4a843" stroke-width="1.2" opacity="0.55"/>
+      <line x1="80" y1="31" x2="86" y2="25" stroke="#d4a843" stroke-width="1.2" opacity="0.55"/>
+      <line x1="38" y1="73" x2="32" y2="79" stroke="#d4a843" stroke-width="1.2" opacity="0.55"/>
+      <line x1="80" y1="73" x2="86" y2="79" stroke="#d4a843" stroke-width="1.2" opacity="0.55"/>
+      <!-- Wavy rays between -->
+      <path d="M45 22 Q47 18 49 22 Q51 26 53 22" stroke="#d4a843" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M45 82 Q47 86 49 82 Q51 78 53 82" stroke="#d4a843" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <!-- Stone wall / sunflowers -->
+      <rect x="16" y="138" width="86" height="28" rx="2" fill="#e8d8b8" stroke="#b8882a" stroke-width="0.5" opacity="0.45"/>
+      <!-- Wall stones -->
+      <line x1="16" y1="148" x2="102" y2="148" stroke="#b8882a" stroke-width="0.3" opacity="0.3"/>
+      <line x1="16" y1="158" x2="102" y2="158" stroke="#b8882a" stroke-width="0.3" opacity="0.3"/>
+      <line x1="30" y1="138" x2="30" y2="148" stroke="#b8882a" stroke-width="0.3" opacity="0.3"/>
+      <line x1="55" y1="138" x2="55" y2="148" stroke="#b8882a" stroke-width="0.3" opacity="0.3"/>
+      <line x1="80" y1="138" x2="80" y2="148" stroke="#b8882a" stroke-width="0.3" opacity="0.3"/>
+      <!-- Sunflowers -->
+      <circle cx="20" cy="132" r="5" fill="#d4a843" opacity="0.6"/>
+      <circle cx="35" cy="128" r="5" fill="#d4a843" opacity="0.55"/>
+      <circle cx="83" cy="128" r="5" fill="#d4a843" opacity="0.55"/>
+      <circle cx="98" cy="132" r="5" fill="#d4a843" opacity="0.6"/>
+      <circle cx="20" cy="132" r="2.5" fill="#b8882a" opacity="0.5"/>
+      <circle cx="35" cy="128" r="2.5" fill="#b8882a" opacity="0.45"/>
+      <circle cx="83" cy="128" r="2.5" fill="#b8882a" opacity="0.45"/>
+      <circle cx="98" cy="132" r="2.5" fill="#b8882a" opacity="0.5"/>
+      <!-- Child on white horse -->
+      <ellipse cx="59" cy="133" rx="14" ry="8" fill="#f5ede0" stroke="#b8882a" stroke-width="0.6" opacity="0.5"/>
+      <circle cx="50" cy="120" r="7" fill="none" stroke="#b8882a" stroke-width="0.6" opacity="0.5"/>
+      <!-- Banner flag -->
+      <line x1="66" y1="95" x2="66" y2="120" stroke="#b8882a" stroke-width="0.8" opacity="0.5"/>
+      <path d="M66 95 L80 100 L66 106Z" fill="#d4a843" opacity="0.45"/>
+      <rect x="14" y="183" width="90" height="16" rx="3" fill="#fffbf0" stroke="#d4a843" stroke-width="0.5" opacity="0.4"/>
+      <text x="59" y="195" text-anchor="middle" font-family="serif" font-size="8" fill="#d4a843" opacity="0.75" letter-spacing="1.5">THE SUN</text>
+    </svg>
+
+  </div>
+
+  <div class="hero-btns">
+    <a href="#book" class="btn-gold">✦ Book a session</a>
+    <a href="#services" class="btn-out">View readings</a>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- PRIVACY BANNER -->
+<div class="priv-b">
+  <div class="pi"><span class="pdot"></span>Confidential by design</div>
+  <div class="pi"><span class="pdot"></span>Alias or first name only</div>
+  <div class="pi"><span class="pdot"></span>Notes never shared</div>
+  <div class="pi"><span class="pdot"></span>18+ only</div>
+  <div class="pi"><span class="pdot"></span>Spiritual guidance · not professional advice</div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+<div class="wrap fi">
+  <div class="ey">Readings</div>
+  <div class="st">Choose your <em>spread</em></div>
+  <p class="ss">Each reading is a private conversation between you, the cards, and the unseen. Select a reading below to begin booking.</p>
+  <div class="svc-grid" id="svc-grid">
+    <div class="svc-card" data-reading="Single Card Pull" data-amount="500" data-duration="20–30 min" onclick="selectReading(this)">
+      <div class="svc-icon">🌙</div><div class="svc-name">Single Card Pull</div><div class="svc-tag">A moment of focused clarity</div><div class="svc-desc">One card. One question. One clear message. Ideal when you need a quick anchor or a gentle nudge from the universe.</div><div class="svc-price">₹500<span>/ session</span></div><div class="svc-dur">20–30 minutes</div>
+      <button class="svc-select-btn">Select this reading →</button>
+    </div>
+    <div class="svc-card" data-reading="Three Card Spread" data-amount="800" data-duration="30–45 min" onclick="selectReading(this)">
+      <div class="svc-icon">✦</div><div class="svc-name">Three Card Spread</div><div class="svc-tag">Past · Present · Future</div><div class="svc-desc">A three-act story of where you've been, where you stand, and where you're heading. Grounding and deeply narrative.</div><div class="svc-price">₹800<span>/ session</span></div><div class="svc-dur">30–45 minutes</div>
+      <button class="svc-select-btn">Select this reading →</button>
+    </div>
+    <div class="svc-card feat" data-reading="Celtic Cross" data-amount="2000" data-duration="60–75 min" onclick="selectReading(this)">
+      <div class="feat-badge">Most chosen</div><div class="svc-icon">🔮</div><div class="svc-name">Celtic Cross</div><div class="svc-tag">A deep dive into any situation</div><div class="svc-desc">Ten cards. Ten perspectives. The Celtic Cross reveals what surrounds you, what crosses you, and what lies at the root of any question.</div><div class="svc-price">₹2,000<span>/ session</span></div><div class="svc-dur">60–75 minutes</div>
+      <button class="svc-select-btn">Select this reading →</button>
+    </div>
+    <div class="svc-card" data-reading="Relationship Spread" data-amount="1500" data-duration="45–60 min" onclick="selectReading(this)">
+      <div class="svc-icon">♡</div><div class="svc-name">Relationship Spread</div><div class="svc-tag">Love · Family · Partnerships</div><div class="svc-desc">Explores the energy between two people — what is spoken and what is not. For love, family tensions, or any significant bond.</div><div class="svc-price">₹1,500<span>/ session</span></div><div class="svc-dur">45–60 minutes</div>
+      <button class="svc-select-btn">Select this reading →</button>
+    </div>
+    <div class="svc-card" data-reading="Career Path Spread" data-amount="1500" data-duration="45–60 min" onclick="selectReading(this)">
+      <div class="svc-icon">◈</div><div class="svc-name">Career Path Spread</div><div class="svc-tag">Direction · Decisions · Purpose</div><div class="svc-desc">For crossroads moments. Whether to stay, go, start, or pivot — the cards illuminate what logic alone cannot.</div><div class="svc-price">₹1,500<span>/ session</span></div><div class="svc-dur">45–60 minutes</div>
+      <button class="svc-select-btn">Select this reading →</button>
+    </div>
+    <div class="svc-card" data-reading="Monthly Guidance" data-amount="1200" data-duration="40–50 min" onclick="selectReading(this)">
+      <div class="svc-icon">☽</div><div class="svc-name">Monthly Guidance</div><div class="svc-tag">Themes for the month ahead</div><div class="svc-desc">A recurring ritual for those who want to move through each month with intention. What energy is arriving, what to release, what to nurture.</div><div class="svc-price">₹1,200<span>/ session</span></div><div class="svc-dur">40–50 minutes</div>
+      <button class="svc-select-btn">Select this reading →</button>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 3-STEP BOOKING -->
+<section id="book" style="background:var(--bg2)">
+<div class="wrap narrow">
+
+  <div style="text-align:center;margin-bottom:48px" class="fi">
+    <div class="ey">Book a session</div>
+    <div class="st">Your session, <em>step by step</em></div>
+    <p class="ss" style="margin:0 auto;text-align:center">Choose, schedule, and pay in one seamless flow. Takes about 3 minutes.</p>
+  </div>
+
+  <!-- Step tabs -->
+  <div class="step-tabs fi">
+    <button class="step-tab active" id="tab1" onclick="goToStep(1)">
+      <span class="tab-num">1</span>
+      <span class="tab-label">Your Details</span>
+    </button>
+    <button class="step-tab" id="tab2">
+      <span class="tab-num">2</span>
+      <span class="tab-label">Pick a Time</span>
+    </button>
+    <button class="step-tab" id="tab3">
+      <span class="tab-num">3</span>
+      <span class="tab-label">Payment</span>
+    </button>
+  </div>
+
+  <!-- STEP 1: INTAKE FORM -->
+  <div class="step-panel active" id="panel1">
+    <div class="form-card">
+
+      <!-- Reading summary (shows after selection) -->
+      <div class="reading-summary" id="reading-summary" style="display:none">
+        <div>
+          <div class="rs-label">Selected reading</div>
+          <div class="rs-reading" id="rs-reading-name">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="rs-price" id="rs-price">₹—</div>
+          <div class="rs-change" onclick="changeReading()">Change</div>
+        </div>
+      </div>
+
+      <!-- No reading selected prompt -->
+      <div id="no-reading-prompt" style="text-align:center;padding:24px;background:var(--goldbg);border-radius:var(--r);margin-bottom:28px;display:none">
+        <div style="font-size:14px;color:var(--muted);margin-bottom:12px;font-weight:300">No reading selected yet.</div>
+        <a href="#services" class="btn-gold" style="font-size:12px;padding:10px 24px">Choose a reading above ↑</a>
+      </div>
+
+      <form id="bform" novalidate>
+        <div class="fsec">About you</div>
+        <div class="frow" style="margin-bottom:24px">
+          <div class="fblock" style="margin-bottom:0"><label class="flabel">What shall we call you? <span class="req">✦</span></label><input type="text" id="client_name" placeholder="First name or alias"></div>
+          <div class="fblock" style="margin-bottom:0"><label class="flabel">Contact detail <span class="req">✦</span></label><input type="text" id="contact_detail" placeholder="WhatsApp / email / Instagram"></div>
+        </div>
+        <div class="fblock">
+          <label class="flabel">How can we reach you? <span class="req">✦</span></label>
+          <div class="ogrid">
+            <div class="opt"><input type="radio" name="cc" id="ch1" value="WhatsApp"><label for="ch1"><span class="odot"></span>WhatsApp</label></div>
+            <div class="opt"><input type="radio" name="cc" id="ch2" value="Email"><label for="ch2"><span class="odot"></span>Email</label></div>
+            <div class="opt"><input type="radio" name="cc" id="ch3" value="Instagram DM"><label for="ch3"><span class="odot"></span>Instagram DM</label></div>
+            <div class="opt"><input type="radio" name="cc" id="ch4" value="Stay anonymous"><label for="ch4"><span class="odot"></span>Stay anonymous</label></div>
+          </div>
+        </div>
+
+        <div class="fsec" style="margin-top:28px">Your reading</div>
+        <div class="fblock">
+          <label class="flabel">Focus area <span class="req">✦</span></label>
+          <div class="ogrid">
+            <div class="opt"><input type="radio" name="fa" id="fa1" value="Career & Purpose"><label for="fa1"><span class="odot"></span>Career & Purpose</label></div>
+            <div class="opt"><input type="radio" name="fa" id="fa2" value="Relationships & Love"><label for="fa2"><span class="odot"></span>Relationships & Love</label></div>
+            <div class="opt"><input type="radio" name="fa" id="fa3" value="Family"><label for="fa3"><span class="odot"></span>Family</label></div>
+            <div class="opt"><input type="radio" name="fa" id="fa4" value="Finances & Abundance"><label for="fa4"><span class="odot"></span>Finances & Abundance</label></div>
+            <div class="opt"><input type="radio" name="fa" id="fa5" value="Health & Wellbeing"><label for="fa5"><span class="odot"></span>Health & Wellbeing</label></div>
+            <div class="opt"><input type="radio" name="fa" id="fa6" value="Healing & Closure"><label for="fa6"><span class="odot"></span>Healing & Closure</label></div>
+            <div class="opt"><input type="radio" name="fa" id="fa7" value="General Guidance"><label for="fa7"><span class="odot"></span>General Guidance</label></div>
+            <div class="opt"><input type="radio" name="fa" id="fa8" value="I'd rather not say"><label for="fa8"><span class="odot"></span>I'd rather not say</label></div>
+          </div>
+        </div>
+        <div class="fblock">
+          <label class="flabel">Anything specific for the cards? <span class="hint">optional</span></label>
+          <textarea id="message" placeholder="Share as little or as much as you are comfortable with. This helps prepare for your session."></textarea>
+        </div>
+
+        <div class="fsec" style="margin-top:28px">Session preference</div>
+        <div class="fblock">
+          <label class="flabel">Preferred format <span class="req">✦</span></label>
+          <div class="ogrid">
+            <div class="opt"><input type="radio" name="sf" id="sf1" value="Video Call"><label for="sf1"><span class="odot"></span>Video Call</label></div>
+            <div class="opt"><input type="radio" name="sf" id="sf2" value="Voice Call"><label for="sf2"><span class="odot"></span>Voice Call</label></div>
+            <div class="opt"><input type="radio" name="sf" id="sf3" value="Chat (text-based)"><label for="sf3"><span class="odot"></span>Chat (text-based)</label></div>
+          </div>
+        </div>
+
+        <div class="consent-box" style="margin-top:28px">
+          <div class="fsec" style="margin-bottom:14px">Consent <span style="color:var(--gold);font-size:12px;margin-left:4px">✦ required</span></div>
+          <div class="opt">
+            <input type="checkbox" id="consent">
+            <label for="consent"><span class="ochk"></span><span>I understand that session notes are kept privately by the reader for professional reference only and will never be shared. I am aged 18+, engaging freely with this spiritual guidance service, which is not a substitute for professional advice.</span></label>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <span class="step-nav-note" id="step1-err" style="color:var(--rose)"></span>
+          <button type="button" class="btn-gold" onclick="proceedToStep2()">Continue — Pick a time →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- STEP 2: CAL.COM CALENDAR -->
+  <div class="step-panel" id="panel2">
+    <div class="cal-wrap">
+      <div class="cal-header">
+        <h3>Choose your session time</h3>
+        <p>Select a date and time that works for you. All times are in IST.</p>
+        <div class="cal-reading-tag">
+          <span>🔮</span>
+          <span id="cal-reading-label">Select reading above</span>
+          <span id="cal-duration-label" style="color:var(--faint);margin-left:4px"></span>
+        </div>
+      </div>
+      <iframe
+        id="cal-iframe"
+        class="cal-embed"
+        src="https://cal.com/theprovidenceroom?embed=true&layout=month_view&theme=light&brandColor=b8882a&hideEventTypeDetails=false"
+        title="Book a session — The Providence Room"
+        loading="lazy">
+      </iframe>
+      <div class="cal-note">
+        🔐 Cal.com handles scheduling privately. Your booking details are sent directly to theprovidenceroom@gmail.com.
+        After selecting your time, proceed to payment below.
+      </div>
+      <div class="cal-nav">
+        <button class="btn-back" onclick="goToStep(1)">← Back</button>
+        <button class="btn-gold" onclick="proceedToStep3()">I've picked my time — Proceed to payment →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: RAZORPAY PAYMENT -->
+  <div class="step-panel" id="panel3">
+    <div class="pay-card">
+      <div class="pay-icon">💳</div>
+      <div class="pay-title">Complete your booking</div>
+      <div class="pay-subtitle">Your session time is reserved. Complete payment to confirm. You'll receive a confirmation email and calendar invite immediately after.</div>
+
+      <div class="pay-summary" id="pay-summary">
+        <div class="pay-sum-row">
+          <span class="pay-sum-label">Reading</span>
+          <span class="pay-sum-val" id="ps-reading">—</span>
+        </div>
+        <div class="pay-sum-row">
+          <span class="pay-sum-label">Duration</span>
+          <span class="pay-sum-val" id="ps-duration">—</span>
+        </div>
+        <div class="pay-sum-row">
+          <span class="pay-sum-label">Client</span>
+          <span class="pay-sum-val" id="ps-client">—</span>
+        </div>
+        <div class="pay-sum-row">
+          <span class="pay-sum-label">Format</span>
+          <span class="pay-sum-val" id="ps-format">—</span>
+        </div>
+        <div class="pay-sum-row total">
+          <span class="pay-sum-label">Total</span>
+          <span class="pay-sum-val" id="ps-amount">₹—</span>
+        </div>
+      </div>
+
+      <div class="pay-methods">
+        <span class="pay-method">💳 Credit / Debit Card</span>
+        <span class="pay-method">📱 UPI</span>
+        <span class="pay-method">🏦 Net Banking</span>
+        <span class="pay-method">👛 Wallets</span>
+      </div>
+
+      <button class="rzp-btn" id="rzp-btn" onclick="initiatePayment()">
+        <span id="rzp-btxt">🔒 Pay Securely</span>
+        <span class="rzp-spin" id="rzp-spin"></span>
+      </button>
+
+      <div class="pay-secure">🔒 Secured by Razorpay · 256-bit encryption · PCI DSS compliant</div>
+      <div class="pay-error" id="pay-error"></div>
+
+      <div style="margin-top:20px">
+        <button class="btn-back" onclick="goToStep(2)" style="font-size:13px">← Back to calendar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-panel" id="success-panel">
+    <div class="confetti-line">✨ 🌙 ✦ 🔮 ✦ 🌙 ✨</div>
+    <div class="success-icon">🌟</div>
+    <h2>Your session is confirmed</h2>
+    <p>Payment received and booking confirmed. A confirmation email and calendar invite are on their way to you.</p>
+    <p style="margin-top:8px">We look forward to holding space for you.</p>
+    <div class="success-detail" id="success-detail"></div>
+    <div style="margin-top:36px">
+      <a href="#top" class="btn-out">← Return to home</a>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+<div class="wrap fi">
+  <div class="about-grid">
+    <div class="about-visual fi">
+      <svg width="290" height="310" viewBox="0 0 290 310" fill="none">
+        <circle cx="145" cy="155" r="130" stroke="#b8882a" stroke-width="0.8" opacity="0.12" stroke-dasharray="4 8"/>
+        <circle cx="145" cy="155" r="98" stroke="#b8882a" stroke-width="0.5" opacity="0.08"/>
+        <circle cx="105" cy="38" r="14" fill="rgba(184,136,42,0.1)" stroke="#b8882a" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="145" cy="28" r="18" fill="rgba(184,136,42,0.14)" stroke="#b8882a" stroke-width="1" opacity="0.75"/>
+        <circle cx="185" cy="38" r="14" fill="rgba(184,136,42,0.1)" stroke="#b8882a" stroke-width="0.8" opacity="0.5"/>
+        <path d="M113 115 Q111 136 111 158 Q111 182 121 197 Q133 212 145 215 Q157 212 169 197 Q179 182 179 158 Q179 136 177 115 L169 112 Q162 109 155 109 L135 109 Q128 109 121 112Z" fill="rgba(184,136,42,0.05)" stroke="#b8882a" stroke-width="0.9" opacity="0.65"/>
+        <path d="M121 112 L118 90 Q118 83 123 83 Q128 83 128 90 L128 109" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.55"/>
+        <path d="M128 109 L127 83 Q127 76 132 76 Q137 76 137 83 L137 109" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.55"/>
+        <path d="M137 109 L137 80 Q137 74 142 74 Q147 74 147 80 L147 109" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.55"/>
+        <path d="M147 109 L149 83 Q149 76 154 76 Q159 76 159 83 L158 109" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.55"/>
+        <path d="M158 109 L161 90 Q161 83 166 83 Q171 83 171 90 L168 112" stroke="#b8882a" stroke-width="0.8" fill="none" opacity="0.55"/>
+        <ellipse cx="145" cy="168" rx="16" ry="10" stroke="#b8882a" stroke-width="0.9" fill="none" opacity="0.65"/>
+        <circle cx="145" cy="168" r="6" fill="rgba(107,143,126,0.3)" stroke="#6b8f7e" stroke-width="0.6" opacity="0.75"/>
+        <circle cx="145" cy="168" r="3" fill="#b8882a" opacity="0.7"/>
+        <circle cx="147" cy="166" r="0.9" fill="white" opacity="0.7"/>
+        <text x="145" y="298" text-anchor="middle" font-family="serif" font-size="9" fill="#b8882a" opacity="0.28" letter-spacing="4">✦ THE READER ✦</text>
+      </svg>
+    </div>
+    <div class="about-text fi d2">
+      <div class="ey">About</div>
+      <div class="st">This room <em>holds space</em></div>
+      <p class="lead">The Providence Room was born from a belief that everyone deserves a private, dignified space to ask their most honest questions — without judgment, without spectacle.</p>
+      <p>Every reading is approached with genuine care and deep respect for where you are in your journey. Tarot, in this room, is not about prediction. It is about reflection — a mirror held up to your own inner wisdom.</p>
+      <p>Whether you are at a crossroads, seeking clarity, or simply curious what the cards have to say — you are welcome here, exactly as you are.</p>
+      <div class="vals">
+        <div class="val"><span class="vdot">✦</span>Every session held with complete discretion</div>
+        <div class="val"><span class="vdot">✦</span>No judgement, no pressure, no performance</div>
+        <div class="val"><span class="vdot">✦</span>You set the pace and the depth</div>
+        <div class="val"><span class="vdot">✦</span>Available online · across India · worldwide</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" style="background:var(--surface)">
+<div class="wrap fi" style="text-align:center">
+  <div class="ey">Reflections</div>
+  <div class="st">What clients <em>say</em></div>
+  <div class="tgrid">
+    <div class="tcard fi d1"><div class="t-stars">★ ★ ★ ★ ★</div><div class="t-text">"I came in completely overwhelmed. I left with clarity I hadn't felt in months. The reading was gentle, precise, and deeply private. I felt completely safe."</div><div class="t-meta">M. — Career Path Reading · Online</div></div>
+    <div class="tcard fi d2"><div class="t-stars">★ ★ ★ ★ ★</div><div class="t-text">"Nothing felt dramatic or performative. It was a real conversation. The Celtic Cross was uncannily accurate. I've recommended this to three people already."</div><div class="t-meta">P. — Celtic Cross · Online</div></div>
+    <div class="tcard fi d3"><div class="t-stars">★ ★ ★ ★ ★</div><div class="t-text">"I've done the monthly guidance sessions for three months now. Each one has given me something tangible to work with. I come back because it actually helps."</div><div class="t-meta">K. — Monthly Guidance · Returning client</div></div>
+  </div>
+</div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy" style="background:var(--bg2)">
+<div class="wrap fi">
+  <div class="ey">Confidential by design</div>
+  <div class="st">Your privacy is <em>the product</em></div>
+  <p class="ss">Most practices handle client information casually. We don't. Privacy is not a policy here — it is the foundation everything is built on.</p>
+  <div class="pgrid">
+    <div class="pcard fi d1"><div class="pcard-icon">🔐</div><div class="pcard-title">Alias only</div><div class="pcard-desc">We store your first name or a chosen alias. No surnames, no unnecessary personal details.</div></div>
+    <div class="pcard fi d2"><div class="pcard-icon">📓</div><div class="pcard-title">Private notes</div><div class="pcard-desc">Session notes are the reader's private professional record. Never shared, shown, or forwarded.</div></div>
+    <div class="pcard fi d3"><div class="pcard-icon">🚫</div><div class="pcard-title">No recordings</div><div class="pcard-desc">Sessions are never recorded without your explicit prior written consent.</div></div>
+    <div class="pcard fi d1"><div class="pcard-icon">🗑️</div><div class="pcard-title">Right to deletion</div><div class="pcard-desc">Request complete deletion of your data at any time. We comply within 7 days.</div></div>
+    <div class="pcard fi d2"><div class="pcard-icon">✅</div><div class="pcard-title">Explicit consent</div><div class="pcard-desc">Consent obtained before every session. You decide what we keep and what we don't.</div></div>
+    <div class="pcard fi d3"><div class="pcard-icon">📅</div><div class="pcard-title">Annual review</div><div class="pcard-desc">All client data reviewed annually and purged per India's DPDP Act 2023.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--surface)">
+<div class="wrap narrow fi">
+  <div style="text-align:center"><div class="ey">Questions</div><div class="st">Things you may <em>wonder</em></div></div>
+  <div class="faq-list">
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I need to believe in tarot for a reading to help?<span class="faq-arr">+</span></button><div class="faq-a">Not at all. Many clients come with curiosity, skepticism, or simply an open mind. The cards work as a reflection tool — they surface what is already within you. Belief is not a requirement. Openness is.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is everything I share kept confidential?<span class="faq-arr">+</span></button><div class="faq-a">Completely. Session details, personal disclosures, and reading notes are private to the reader alone. Nothing is shared, recorded, or disclosed. We comply fully with India's DPDP Act 2023.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How does payment work?<span class="faq-arr">+</span></button><div class="faq-a">Payment is processed securely via Razorpay — India's leading payment gateway. You can pay using UPI, credit/debit card, net banking, or wallets. Payment confirms your session booking immediately.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I cancel or reschedule?<span class="faq-arr">+</span></button><div class="faq-a">Cancellations more than 24 hours before your session may be rescheduled once at no charge. Sessions cancelled within 24 hours or no-shows are non-refundable. Please reach out early — we understand life happens.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What if I am under 18?<span class="faq-arr">+</span></button><div class="faq-a">Our services are available to individuals aged 18 years and above only. We are unable to conduct readings for minors under any circumstances.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Which languages are sessions available in?<span class="faq-arr">+</span></button><div class="faq-a">Sessions can be conducted in English and Hindi. Please mention your language preference in the booking form.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are readings available internationally?<span class="faq-arr">+</span></button><div class="faq-a">Yes — video, voice, and chat sessions are available worldwide. For international payments, the Razorpay checkout supports international cards. Contact us if you need assistance.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- DISCLAIMER -->
+<div id="disclaimer" style="padding:52px 0;background:var(--bg2);position:relative;z-index:1">
+<div class="disc-inner fi">
+  <div class="disc-box">
+    <div class="disc-title">⚖ Important notice — please read</div>
+    <div class="disc-body">
+      <p><strong>Entertainment & Spiritual Purpose:</strong> Tarot readings offered by The Providence Room are intended for entertainment, spiritual guidance, and personal reflection purposes only. They do not constitute legal, financial, medical, or psychological advice of any kind.</p>
+      <p><strong>No Guarantee:</strong> The Providence Room makes no claims of predicting the future with certainty. All guidance is based on the reader's interpretation of the cards and is not guaranteed to be accurate. Readings should not be used as the sole basis for any significant life decision.</p>
+      <p><strong>Professional Advice:</strong> If you are experiencing a mental health crisis, legal difficulty, medical emergency, or financial distress, please seek qualified professional help immediately.</p>
+      <p><strong>Age Restriction:</strong> Services are available strictly to individuals aged 18 years and above only.</p>
+      <p><strong>Privacy & Data:</strong> We collect and process personal data in accordance with India's Digital Personal Data Protection (DPDP) Act 2023. Your data is never sold, shared, or disclosed to third parties. Request deletion at any time: theprovidenceroom@gmail.com.</p>
+      <p><strong>Refund Policy:</strong> Session fees are non-refundable once a reading has commenced. Cancellations more than 24 hours in advance may be rescheduled once at no charge. No-shows are non-refundable.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="foot-logo">🔮 The Providence Room</div>
+  <div class="foot-tag">A private room for your most honest questions</div>
+  <div class="foot-links">
+    <a href="#services">Readings</a><a href="#book">Book</a>
+    <a href="#about">About</a><a href="#privacy">Privacy</a>
+    <a href="#faq">FAQ</a><a href="mailto:theprovidenceroom@gmail.com">Contact</a>
+  </div>
+  <div class="foot-note">theprovidenceroom@gmail.com · theprovidenceroom.com<br>Tarot readings are for entertainment and spiritual reflection only. Not a substitute for professional advice. 18+ only.</div>
+  <div class="foot-copy">© 2026 The Providence Room · All rights reserved · DPDP Act 2023 compliant</div>
+</footer>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────
+const RZP_KEY   = 'rzp_test_SqNlvdHWfl21Yz'; // Razorpay KEY_ID — safe to expose on frontend
+const EJS_KEY   = 'xP4YeXb3Sswltfh3v';
+const EJS_SVC   = 'service_s643e07';
+const EJS_TPL   = 'template_jhcp6p5';
+// Notion token and DB ID are handled server-side via Netlify function
+emailjs.init(EJS_KEY);
+
+// ── STATE ────────────────────────────────────────────────
+const state = {
+  reading: '', amount: 0, duration: '',
+  name: '', contact: '', channel: '', focus: '', message: '', format: '',
+  paymentId: '', orderId: ''
+};
+
+// ── SACRED GEOMETRY CANVAS ──────────────────────────────
+(function(){
+  const canvas = document.getElementById('geo');
+  const ctx = canvas.getContext('2d');
+  let W, H, shapes = [];
+
+  function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; initShapes(); }
+
+  function initShapes(){
+    shapes = [];
+    const n = Math.max(4, Math.floor(W / 200));
+
+    // Flower of Life circles
+    for(let i = 0; i < n; i++){
+      const cx = Math.random()*W, cy = Math.random()*H, r = Math.random()*70+40;
+      for(let j = 0; j < 6; j++){
+        const a = (Math.PI/3)*j;
+        shapes.push({ type:'circle', x:cx+Math.cos(a)*r*0.85, y:cy+Math.sin(a)*r*0.85, r, angle:0, speed:0,
+          vx:(Math.random()-0.5)*0.06, vy:(Math.random()-0.5)*0.06, op:Math.random()*0.028+0.012, color:'184,136,42', pulse:Math.random()*6.28, ps:0.002+Math.random()*0.003 });
+      }
+      shapes.push({ type:'circle', x:cx, y:cy, r, angle:0, speed:0, vx:(Math.random()-0.5)*0.06, vy:(Math.random()-0.5)*0.06,
+        op:Math.random()*0.03+0.015, color:'184,136,42', pulse:Math.random()*6.28, ps:0.002+Math.random()*0.003 });
+    }
+
+    // Metatron's Cube-inspired hexagons
+    for(let i = 0; i < n-1; i++){
+      shapes.push({ type:'hexagon', x:Math.random()*W, y:Math.random()*H, r:Math.random()*90+50,
+        angle:Math.random()*Math.PI, speed:(Math.random()*0.008+0.003)*(Math.random()>.5?1:-1),
+        vx:(Math.random()-0.5)*0.07, vy:(Math.random()-0.5)*0.07, op:Math.random()*0.035+0.015, color:'184,136,42' });
+    }
+
+    // Sri Yantra triangle pairs
+    for(let i = 0; i < n; i++){
+      shapes.push({ type:'triangle_pair', x:Math.random()*W, y:Math.random()*H, r:Math.random()*70+40,
+        angle:Math.random()*Math.PI*2, speed:(Math.random()*0.006+0.002)*(Math.random()>.5?1:-1),
+        vx:(Math.random()-0.5)*0.08, vy:(Math.random()-0.5)*0.08, op:Math.random()*0.032+0.014,
+        color:Math.random()>.5?'184,136,42':'196,131,122' });
+    }
+
+    // Vesica Piscis
+    for(let i = 0; i < Math.floor(n/2)+1; i++){
+      shapes.push({ type:'vesica', x:Math.random()*W, y:Math.random()*H, r:Math.random()*80+50,
+        angle:Math.random()*Math.PI, speed:(Math.random()*0.005+0.002)*(Math.random()>.5?1:-1),
+        vx:(Math.random()-0.5)*0.05, vy:(Math.random()-0.5)*0.05, op:Math.random()*0.028+0.012, color:'107,143,126' });
+    }
+
+    // Fibonacci spirals (arcs)
+    for(let i = 0; i < Math.floor(n/2); i++){
+      shapes.push({ type:'spiral', x:Math.random()*W, y:Math.random()*H, r:Math.random()*60+30,
+        angle:Math.random()*Math.PI*2, speed:(Math.random()*0.007+0.003)*(Math.random()>.5?1:-1),
+        vx:(Math.random()-0.5)*0.06, vy:(Math.random()-0.5)*0.06, op:Math.random()*0.03+0.012, color:'184,136,42' });
+    }
+  }
+
+  function wrap(s){
+    const m = s.r*2;
+    if(s.x < -m) s.x = W+m; if(s.x > W+m) s.x = -m;
+    if(s.y < -m) s.y = H+m; if(s.y > H+m) s.y = -m;
+  }
+
+  function drawHex(x,y,r,a){ ctx.beginPath(); for(let i=0;i<6;i++){const ang=a+(Math.PI/3)*i; i?ctx.lineTo(x+r*Math.cos(ang),y+r*Math.sin(ang)):ctx.moveTo(x+r*Math.cos(ang),y+r*Math.sin(ang));} ctx.closePath(); ctx.stroke(); }
+  function drawTri(x,y,r,a){ ctx.beginPath(); for(let i=0;i<3;i++){const ang=a+(Math.PI*2/3)*i-Math.PI/2; i?ctx.lineTo(x+r*Math.cos(ang),y+r*Math.sin(ang)):ctx.moveTo(x+r*Math.cos(ang),y+r*Math.sin(ang));} ctx.closePath(); ctx.stroke(); }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    shapes.forEach(s => {
+      s.angle += s.speed; s.x += s.vx; s.y += s.vy; wrap(s);
+      if(s.pulse!==undefined){ s.pulse+=s.ps; }
+      const op = s.pulse!==undefined ? s.op*(0.6+0.4*Math.sin(s.pulse)) : s.op;
+      ctx.strokeStyle = `rgba(${s.color},${op})`; ctx.lineWidth = 0.7; ctx.setLineDash([]);
+
+      if(s.type==='circle'){
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.stroke();
+      } else if(s.type==='hexagon'){
+        drawHex(s.x,s.y,s.r,s.angle);
+        ctx.strokeStyle=`rgba(${s.color},${op*0.45})`; drawHex(s.x,s.y,s.r*0.57,s.angle+Math.PI/6);
+        // Star of David lines
+        ctx.strokeStyle=`rgba(${s.color},${op*0.3})`;
+        for(let i=0;i<6;i++){const a1=s.angle+(Math.PI/3)*i,a2=s.angle+(Math.PI/3)*(i+3); ctx.beginPath(); ctx.moveTo(s.x+s.r*Math.cos(a1),s.y+s.r*Math.sin(a1)); ctx.lineTo(s.x+s.r*Math.cos(a2),s.y+s.r*Math.sin(a2)); ctx.stroke();}
+      } else if(s.type==='triangle_pair'){
+        drawTri(s.x,s.y,s.r,s.angle);
+        ctx.strokeStyle=`rgba(${s.color},${op*0.7})`; drawTri(s.x,s.y,s.r,s.angle+Math.PI);
+      } else if(s.type==='vesica'){
+        const d=s.r*0.86;
+        ctx.beginPath(); ctx.arc(s.x-d/2,s.y,s.r,0,Math.PI*2); ctx.stroke();
+        ctx.strokeStyle=`rgba(${s.color},${op*0.8})`; ctx.beginPath(); ctx.arc(s.x+d/2,s.y,s.r,0,Math.PI*2); ctx.stroke();
+      } else if(s.type==='spiral'){
+        ctx.beginPath();
+        for(let t=0;t<Math.PI*6;t+=0.08){ const sr=s.r*(t/(Math.PI*6)); ctx.lineTo(s.x+sr*Math.cos(t+s.angle),s.y+sr*Math.sin(t+s.angle)); }
+        ctx.stroke();
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize',resize); resize(); draw();
+})();
+
+// ── NAV ──────────────────────────────────────────────────
+window.addEventListener('scroll',()=>{ document.getElementById('navbar').classList.toggle('scrolled',scrollY>60); });
+function toggleMobile(){ document.getElementById('mmenu').classList.toggle('open'); }
+function closeMobile(){ document.getElementById('mmenu').classList.remove('open'); }
+
+// ── SCROLL FADE ──────────────────────────────────────────
+const io = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:0.08});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+// ── FAQ ──────────────────────────────────────────────────
+function toggleFaq(btn){ const i=btn.parentElement,o=i.classList.contains('open'); document.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('open')); if(!o)i.classList.add('open'); }
+
+// ── SERVICE SELECTION ────────────────────────────────────
+function selectReading(card){
+  document.querySelectorAll('.svc-card').forEach(c=>c.classList.remove('selected'));
+  card.classList.add('selected');
+  state.reading = card.dataset.reading;
+  state.amount  = parseInt(card.dataset.amount);
+  state.duration= card.dataset.duration;
+  // Update summary bar
+  document.getElementById('reading-summary').style.display='flex';
+  document.getElementById('no-reading-prompt').style.display='none';
+  document.getElementById('rs-reading-name').textContent = state.reading;
+  document.getElementById('rs-price').textContent = '₹' + state.amount.toLocaleString('en-IN');
+  // Scroll to booking
+  setTimeout(()=>{ document.getElementById('book').scrollIntoView({behavior:'smooth',block:'start'}); },300);
+}
+
+function changeReading(){
+  document.getElementById('services').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── STEP NAVIGATION ──────────────────────────────────────
+function goToStep(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('panel'+i).classList.toggle('active',i===n);
+    const tab=document.getElementById('tab'+i);
+    tab.classList.remove('active','done');
+    if(i===n) tab.classList.add('active');
+    else if(i<n) tab.classList.add('done');
+  });
+  document.getElementById('book').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function getR(name){ const e=document.querySelector(`input[name="${name}"]:checked`); return e?e.value:''; }
+
+function proceedToStep2(){
+  const err = document.getElementById('step1-err');
+  // Must have reading selected
+  if(!state.reading){ document.getElementById('no-reading-prompt').style.display='block'; err.textContent='Please select a reading type above.'; document.getElementById('services').scrollIntoView({behavior:'smooth'}); return; }
+  if(!document.getElementById('client_name').value.trim()){ err.textContent='Please enter your name or alias.'; return; }
+  if(!getR('cc')){ err.textContent='Please choose how we can reach you.'; return; }
+  if(!document.getElementById('contact_detail').value.trim()){ err.textContent='Please enter your contact detail.'; return; }
+  if(!getR('fa')){ err.textContent='Please choose a focus area.'; return; }
+  if(!getR('sf')){ err.textContent='Please choose a session format.'; return; }
+  if(!document.getElementById('consent').checked){ err.textContent='Please tick the consent checkbox.'; return; }
+  err.textContent='';
+  // Save state
+  state.name    = document.getElementById('client_name').value.trim();
+  state.contact = document.getElementById('contact_detail').value.trim();
+  state.channel = getR('cc');
+  state.focus   = getR('fa');
+  state.message = document.getElementById('message').value.trim();
+  state.format  = getR('sf');
+  // Update Cal.com embed with reading context
+  document.getElementById('cal-reading-label').textContent = state.reading;
+  document.getElementById('cal-duration-label').textContent = '· ' + state.duration;
+  // Update Cal.com URL with metadata
+  const calSrc = `https://cal.com/theprovidenceroom?embed=true&layout=month_view&theme=light&name=${encodeURIComponent(state.name)}&notes=${encodeURIComponent('Reading: '+state.reading+' | Focus: '+state.focus)}&hideEventTypeDetails=false`;
+  document.getElementById('cal-iframe').src = calSrc;
+  goToStep(2);
+}
+
+function proceedToStep3(){
+  // Update payment summary
+  document.getElementById('ps-reading').textContent  = state.reading;
+  document.getElementById('ps-duration').textContent = state.duration;
+  document.getElementById('ps-client').textContent   = state.name || '—';
+  document.getElementById('ps-format').textContent   = state.format || '—';
+  document.getElementById('ps-amount').textContent   = '₹' + state.amount.toLocaleString('en-IN');
+  goToStep(3);
+}
+
+// ── RAZORPAY PAYMENT ─────────────────────────────────────
+async function initiatePayment(){
+  const btn  = document.getElementById('rzp-btn');
+  const btxt = document.getElementById('rzp-btxt');
+  const spin = document.getElementById('rzp-spin');
+  const err  = document.getElementById('pay-error');
+
+  btn.disabled=true; btxt.style.display='none'; spin.style.display='inline-block'; err.style.display='none';
+
+  try {
+    // Call Netlify function to create Razorpay order
+    const res = await fetch('/.netlify/functions/create-order', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ amount: state.amount, reading: state.reading, clientName: state.name })
+    });
+
+    if(!res.ok){
+      const e = await res.json();
+      throw new Error(e.error || 'Failed to create order');
+    }
+
+    const order = await res.json();
+
+    // Open Razorpay checkout modal
+    const options = {
+      key: RZP_KEY,
+      amount: order.amount,
+      currency: order.currency,
+      order_id: order.order_id,
+      name: 'The Providence Room',
+      description: state.reading,
+      image: 'https://theprovidenceroom.com/favicon.png',
+      prefill: {
+        name: state.name,
+        contact: state.channel==='WhatsApp' ? state.contact : '',
+        email: state.channel==='Email' ? state.contact : '',
+      },
+      notes: {
+        reading_type: state.reading,
+        client_name: state.name,
+        focus_area: state.focus,
+        session_format: state.format,
+      },
+      theme: { color: '#b8882a' },
+      modal: {
+        ondismiss: function(){
+          btn.disabled=false; btxt.style.display='inline'; spin.style.display='none';
+          err.textContent='Payment cancelled. Click Pay Securely to try again.'; err.style.display='block';
+        }
+      },
+      handler: async function(response){
+        await verifyAndConfirm(response);
+      }
+    };
+
+    btn.disabled=false; btxt.style.display='inline'; spin.style.display='none';
+    const rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(r){
+      btn.disabled=false; btxt.style.display='inline'; spin.style.display='none';
+      err.textContent = 'Payment failed: ' + (r.error.description || 'Unknown error. Please try again.');
+      err.style.display='block';
+    });
+    rzp.open();
+
+  } catch(e){
+    btn.disabled=false; btxt.style.display='inline'; spin.style.display='none';
+    err.textContent = e.message || 'Could not initiate payment. Please try again.';
+    err.style.display='block';
+  }
+}
+
+async function verifyAndConfirm(rzpResponse){
+  try {
+    // Verify with backend
+    const res = await fetch('/.netlify/functions/verify-payment', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        razorpay_payment_id: rzpResponse.razorpay_payment_id,
+        razorpay_order_id:   rzpResponse.razorpay_order_id,
+        razorpay_signature:  rzpResponse.razorpay_signature
+      })
+    });
+
+    const data = await res.json();
+    if(!res.ok || !data.verified){ throw new Error(data.error || 'Payment verification failed'); }
+
+    state.paymentId = rzpResponse.razorpay_payment_id;
+    state.orderId   = rzpResponse.razorpay_order_id;
+
+    // Run all confirmations in parallel
+    await Promise.allSettled([
+      sendConfirmationEmail(),
+      createNotionRecord()
+    ]);
+
+    showSuccess();
+  } catch(e){
+    document.getElementById('pay-error').textContent = 'Payment received but verification failed. Please contact us with your payment ID: ' + (rzpResponse.razorpay_payment_id||'');
+    document.getElementById('pay-error').style.display='block';
+  }
+}
+
+// ── CONFIRMATION EMAIL ───────────────────────────────────
+async function sendConfirmationEmail(){
+  return emailjs.send(EJS_SVC, EJS_TPL, {
+    client_name:     state.name,
+    contact_channel: state.channel,
+    contact_detail:  state.contact,
+    reading_type:    state.reading,
+    focus_area:      state.focus,
+    session_format:  state.format,
+    referral_source: 'Website booking',
+    message:         state.message || 'Not provided',
+    consent:         'Yes — given',
+    payment_id:      state.paymentId,
+    amount:          '₹' + state.amount.toLocaleString('en-IN'),
+  });
+}
+
+// ── NOTION CRM RECORD — via Netlify function (token stays server-side) ──────
+async function createNotionRecord(){
+  const res = await fetch('/.netlify/functions/create-notion-record', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name:      state.name,
+      channel:   state.channel,
+      focus:     state.focus,
+      reading:   state.reading,
+      format:    state.format,
+      amount:    state.amount,
+      paymentId: state.paymentId,
+      message:   state.message,
+    })
+  });
+  return res.ok;
+}
+
+// ── SHOW SUCCESS ─────────────────────────────────────────
+function showSuccess(){
+  document.getElementById('panel3').style.display='none';
+  document.querySelectorAll('.step-tabs,.step-panel').forEach(el=>el.style.display='none');
+  const sp = document.getElementById('success-panel');
+  sp.classList.add('show');
+  document.getElementById('success-detail').textContent =
+    `Payment ID: ${state.paymentId} · ${state.reading} · ${state.name}`;
+  document.getElementById('book').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

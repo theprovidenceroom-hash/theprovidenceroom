@@ -1,0 +1,9 @@
+{
+  "name": "the-providence-room",
+  "version": "1.0.0",
+  "description": "The Providence Room — Private Tarot Consultations",
+  "private": true,
+  "dependencies": {
+    "razorpay": "^2.9.2"
+  }
+}
